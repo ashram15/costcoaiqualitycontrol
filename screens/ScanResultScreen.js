@@ -11,24 +11,6 @@ const INPUT_BG = '#F5F5F5';
 const INPUT_BORDER = '#E8E8E8';
 const RADIUS = 4;
 
-function FakeStatusIcons() {
-  return (
-    <View style={styles.statusCluster}>
-      <View style={styles.signalBars}>
-        {[4, 6, 8, 10].map((h, i) => (
-          <View key={i} style={[styles.bar, { height: h }, i > 0 && styles.barSpacer]} />
-        ))}
-      </View>
-      <MaterialCommunityIcons name="wifi" size={16} color={LABEL_GREY} style={styles.statusIcon} />
-      <View style={styles.battery}>
-        <View style={styles.batteryOutline}>
-          <View style={styles.batteryFill} />
-        </View>
-      </View>
-    </View>
-  );
-}
-
 export default function ScanResultScreen() {
   const insets = useSafeAreaInsets();
 
@@ -49,8 +31,7 @@ export default function ScanResultScreen() {
       >
         <View style={styles.inner}>
           <View style={styles.topRow}>
-            <Text style={styles.timestamp}>Timestamp: xx:xx</Text>
-            <FakeStatusIcons />
+            <Text style={styles.timestamp}>Timestamp: April 17, 2026 · 2:41 PM</Text>
           </View>
 
           <Image
@@ -61,10 +42,17 @@ export default function ScanResultScreen() {
           />
 
           <View style={styles.imagePlaceholder}>
-            <MaterialCommunityIcons name="image-outline" size={72} color={BUTTON_BLUE} />
+            <Image
+              source={require('../assets/scan-product-honey.png')}
+              style={styles.productImage}
+              resizeMode="cover"
+              accessibilityLabel="Kirkland Signature raw unfiltered honey bottle"
+            />
           </View>
 
-          <Text style={styles.productLine}>Product: Name</Text>
+          <Text style={styles.productLine}>
+            Product: Kirkland Signature 100% U.S. Raw Unfiltered Honey (3 lb)
+          </Text>
 
           <View style={styles.starsRow}>
             {[0, 1, 2, 3].map((i) => (
@@ -80,7 +68,13 @@ export default function ScanResultScreen() {
           </View>
 
           <Text style={styles.notesLabel}>Notes:</Text>
-          <View style={styles.notesBar} />
+          <View style={styles.notesBox}>
+            <Text style={styles.notesText}>
+              U.S. raw unfiltered honey suitable for sweetening beverages and baked goods, glazing proteins,
+              or pairing with cheese boards. Unfiltered profile may include natural pollen and wax notes.
+              View Analysis for a detailed rating breakdown.
+            </Text>
+          </View>
 
           <Pressable onPress={() => {}} style={styles.analysisLinkWrap}>
             <Text style={styles.analysisLink}>View Analysis</Text>
@@ -127,51 +121,12 @@ const styles = StyleSheet.create({
   },
   topRow: {
     width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     marginBottom: 12,
   },
   timestamp: {
     fontSize: 12,
     color: LABEL_GREY,
-  },
-  statusCluster: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  signalBars: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    marginRight: 6,
-  },
-  bar: {
-    width: 3,
-    backgroundColor: LABEL_GREY,
-    borderRadius: 1,
-  },
-  barSpacer: {
-    marginLeft: 2,
-  },
-  statusIcon: {
-    marginRight: 6,
-  },
-  battery: {
-    justifyContent: 'center',
-  },
-  batteryOutline: {
-    width: 22,
-    height: 11,
-    borderWidth: 1,
-    borderColor: LABEL_GREY,
-    borderRadius: 2,
-    padding: 1,
-    justifyContent: 'center',
-  },
-  batteryFill: {
-    flex: 1,
-    backgroundColor: '#4CAF50',
-    borderRadius: 1,
+    textAlign: 'left',
   },
   logoImage: {
     width: '100%',
@@ -187,15 +142,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: INPUT_BORDER,
     borderRadius: RADIUS,
-    alignItems: 'center',
-    justifyContent: 'center',
+    overflow: 'hidden',
     marginBottom: 20,
+  },
+  productImage: {
+    width: '100%',
+    height: '100%',
   },
   productLine: {
     fontSize: 16,
     color: LABEL_GREY,
     marginBottom: 12,
     textAlign: 'center',
+    paddingHorizontal: 4,
   },
   starsRow: {
     flexDirection: 'row',
@@ -212,12 +171,20 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 8,
   },
-  notesBar: {
+  notesBox: {
     width: '100%',
-    height: 28,
-    backgroundColor: BUTTON_BLUE,
+    backgroundColor: INPUT_BG,
+    borderWidth: 1,
+    borderColor: INPUT_BORDER,
     borderRadius: RADIUS,
-    marginBottom: 28,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    marginBottom: 20,
+  },
+  notesText: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#424242',
   },
   analysisLinkWrap: {
     paddingVertical: 8,
