@@ -4,6 +4,7 @@ import { Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View } fr
 import ProfilePage from "./screens/ProfilePage";
 import ScanHistoryPage from "./screens/ScanHistoryPage";
 import ScannerPage from "./screens/ScannerPage";
+import HomeScreen from './screens/HomeScreen';
 
 type Page = "scanner" | "profile" | "scanHistory";
 
