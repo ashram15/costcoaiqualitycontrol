@@ -16,12 +16,12 @@ export const scanHistory = [
   },
   {
     id: "s2",
-    productName: "Greek Yogurt",
+    productName: "Costco Butter",
     timestamp: "Apr 13, 2026 - 5:40 PM",
-    score: 62,
-    status: "Fair",
-    bestByDate: "Apr 19, 2026",
-    problems: "Slight package swelling",
+    score: 88,
+    status: "Low",
+    bestByDate: "May 10, 2026",
+    problems: "No major concerns",
   },
   {
     id: "s3",
