@@ -1,11 +1,13 @@
 import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { CameraView, useCameraPermissions } from "expo-camera";
 
 const GRID_LINES = Array.from({ length: 12 }, (_, index) => index);
 
 export default function ScannerPage({ onScanAccepted }: { onScanAccepted: () => void }) {
   const [isScanning, setIsScanning] = React.useState(false);
   const [scanDots, setScanDots] = React.useState(".");
+  const [permission, requestPermission] = useCameraPermissions();
 
   React.useEffect(() => {
     if (!isScanning) {
@@ -26,9 +28,33 @@ export default function ScannerPage({ onScanAccepted }: { onScanAccepted: () => 
     };
   }, [isScanning, onScanAccepted]);
 
+  const handleAllowCamera = async () => {
+    if (!permission || !permission.granted) {
+      const result = await requestPermission();
+      if (!result.granted) {
+        return;
+      }
+    }
+    setIsScanning(true);
+  };
+
+  if (!permission) {
+    return (
+      <View style={styles.screen}>
+        <View style={styles.loadingOverlay}>
+          <Text style={styles.loadingText}>Preparing camera…</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.screen}>
-      <View style={styles.scannerArea}>
+      <CameraView style={styles.camera} facing="back" />
+      <View
+        style={[styles.scannerArea, isScanning ? styles.scannerAreaTransparent : undefined]}
+        pointerEvents="box-none"
+      >
         {GRID_LINES.map((line) => (
           <View key={`h-${line}`} style={[styles.gridHorizontal, { top: `${line * 9}%` }]} />
         ))}
@@ -51,11 +77,7 @@ export default function ScannerPage({ onScanAccepted }: { onScanAccepted: () => 
               Your images will only be used for this feature.
             </Text>
             <View style={styles.modalActions}>
-              <TouchableOpacity
-                style={styles.modalButton}
-                activeOpacity={0.8}
-                onPress={() => setIsScanning(true)}
-              >
+              <TouchableOpacity style={styles.modalButton} activeOpacity={0.8} onPress={handleAllowCamera}>
                 <Text style={styles.modalButtonText}>Yes</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.modalButton} activeOpacity={0.8}>
@@ -74,11 +96,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
+  camera: {
+    ...StyleSheet.absoluteFillObject,
+  },
   scannerArea: {
     flex: 1,
     overflow: "hidden",
     backgroundColor: "#ffffff",
     position: "relative",
+  },
+  scannerAreaTransparent: {
+    backgroundColor: "transparent",
+  },
+  loadingOverlay: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#000000",
+  },
+  loadingText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "600",
   },
   gridHorizontal: {
     position: "absolute",
