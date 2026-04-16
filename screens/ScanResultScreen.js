@@ -3,9 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-/** Match SignUpScreen — Costco brand */
-const RED = '#E31837';
-const BUTTON_BLUE = '#003478';
+/** Scan result palette */
+const RED = '#E61031'; /* Medium Candy Apple Red */
+const BUTTON_BLUE = '#005BAD'; /* Medium Persian Blue */
 const LABEL_GREY = '#9E9E9E';
 const INPUT_BG = '#F5F5F5';
 const INPUT_BORDER = '#E8E8E8';
@@ -43,15 +43,15 @@ export default function ScanResultScreen() {
 
           <View style={styles.imagePlaceholder}>
             <Image
-              source={require('../assets/scan-product-honey.png')}
+              source={require('../assets/scan-product-butter.png')}
               style={styles.productImage}
               resizeMode="cover"
-              accessibilityLabel="Kirkland Signature raw unfiltered honey bottle"
+              accessibilityLabel="Kirkland Signature salted sweet cream butter"
             />
           </View>
 
           <Text style={styles.productLine}>
-            Product: Kirkland Signature 100% U.S. Raw Unfiltered Honey (3 lb)
+            Product: Kirkland Signature Salted Sweet Cream Butter (4 x 4 oz sticks, 16 oz / 1 lb)
           </Text>
 
           <View style={styles.starsRow}>
@@ -70,9 +70,8 @@ export default function ScanResultScreen() {
           <Text style={styles.notesLabel}>Notes:</Text>
           <View style={styles.notesBox}>
             <Text style={styles.notesText}>
-              U.S. raw unfiltered honey suitable for sweetening beverages and baked goods, glazing proteins,
-              or pairing with cheese boards. Unfiltered profile may include natural pollen and wax notes.
-              View Analysis for a detailed rating breakdown.
+              Salted sweet cream butter for baking, cooking, and table use (spreads, sauces, sautés).
+              Refrigerate after purchase. View Analysis for a detailed rating breakdown.
             </Text>
           </View>
 
@@ -191,9 +190,10 @@ const styles = StyleSheet.create({
   },
   analysisLink: {
     fontSize: 15,
-    color: LABEL_GREY,
+    color: BUTTON_BLUE,
     textDecorationLine: 'underline',
     textAlign: 'center',
+    fontWeight: '600',
   },
   footer: {
     flexDirection: 'row',
