@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { scanHistory } from "../data";
 
 export default function ScanHistoryPage() {
@@ -25,13 +25,25 @@ export default function ScanHistoryPage() {
     return styles.statusLow;
   };
 
+  const getProductImage = (id: string) => {
+    if (id === "s1") {
+      return require("../assets/organicspinach.png");
+    }
+    if (id === "s2") {
+      return require("../assets/costcobutter.png");
+    }
+    return require("../assets/frozenberries.png");
+  };
+
   return (
     <View style={styles.screen}>
       <ScrollView contentContainerStyle={styles.scanHistoryList}>
         {scanHistory.map((entry) => (
           <View key={entry.id} style={styles.scanHistoryCard}>
             <View style={styles.scanCardRow}>
-              <View style={styles.scanCardImagePlaceholder} />
+              <View style={styles.scanCardImagePlaceholder}>
+                <Image source={getProductImage(entry.id)} style={styles.scanCardImage} resizeMode="cover" />
+              </View>
               <View style={styles.scanCardDetails}>
                 <Text style={styles.scanCardText}>
                   <Text style={styles.scanCardLabel}>Product Name: </Text>
@@ -93,6 +105,11 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     backgroundColor: "#f08f84",
     marginRight: 12,
+    overflow: "hidden",
+  },
+  scanCardImage: {
+    width: "100%",
+    height: "100%",
   },
   scanCardDetails: {
     flex: 1,
