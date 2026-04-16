@@ -3,9 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-/** Wireframe: Costco red; blue pills / stars use #005DAA */
-const COSTCO_RED = '#E31837';
-const COSTCO_BLUE = '#005DAA';
+/** Match app palette: Medium Candy Apple Red, Medium Persian Blue */
+const COSTCO_RED = '#E61031';
+const COSTCO_BLUE = '#005BAD';
 const TITLE_GREY = '#757575';
 const CARD_BG = '#EEEEEE';
 const THUMB_BG = '#D8D8D8';
