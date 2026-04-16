@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-const RED = '#E31837';
-const BUTTON_BLUE = '#003478';
+/** Match scan result palette */
+const RED = '#E61031'; /* Medium Candy Apple Red */
+const BUTTON_BLUE = '#005BAD'; /* Medium Persian Blue */
 const LABEL_GREY = '#9E9E9E';
 const PLACEHOLDER_GREY = '#BDBDBD';
 const INPUT_BG = '#F5F5F5';
@@ -126,7 +127,8 @@ const styles = StyleSheet.create({
   },
   link: {
     textDecorationLine: 'underline',
-    color: LABEL_GREY,
+    color: BUTTON_BLUE,
+    fontWeight: '600',
   },
   field: {
     width: '100%',
