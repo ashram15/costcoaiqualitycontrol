@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { flaggedProducts } from "../data";
+import { COLORS } from "../constants/colors";
 
 export default function ProfilePage({ onShowHistory }: { onShowHistory: () => void }) {
   return (
@@ -70,10 +71,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   profileIconBox: {
-    width: 134,
-    height: 134,
-    borderRadius: 28,
-    backgroundColor: "#f08f84",
+    width: 128,
+    height: 128,
+    borderRadius: 26,
+    backgroundColor: COLORS.PRIMARY_RED,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -97,12 +98,12 @@ const styles = StyleSheet.create({
   },
   scanHistoryButton: {
     width: "100%",
-    backgroundColor: "#0047ab",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     borderRadius: 12,
-    paddingVertical: 14,
+    paddingVertical: 12,
     alignItems: "center",
-    marginTop: 20,
-    marginBottom: 22,
+    marginTop: 16,
+    marginBottom: 18,
   },
   scanHistoryText: {
     color: "#ffffff",
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   flaggedHeader: {
-    backgroundColor: "#0047ab",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     paddingVertical: 10,
     paddingHorizontal: 12,
   },
@@ -131,18 +132,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
     paddingHorizontal: 10,
-    paddingTop: 14,
-    paddingBottom: 16,
+    paddingTop: 10,
+    paddingBottom: 12,
   },
   productCard: {
     width: "31%",
     alignItems: "center",
   },
   productSquare: {
-    width: 96,
-    height: 96,
-    borderRadius: 16,
-    backgroundColor: "#f08f84",
+    width: 104,
+    height: 104,
+    borderRadius: 18,
+    backgroundColor: COLORS.PRIMARY_RED,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 8,
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   productActionLink: {
-    color: "#0047ab",
+    color: COLORS.PRIMARY_BLUE,
     textDecorationLine: "underline",
     fontSize: 12,
     fontWeight: "600",
