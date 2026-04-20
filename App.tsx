@@ -76,7 +76,7 @@ function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
     <View style={styles.header}>
       {onBackPress ? (
         <TouchableOpacity style={styles.backButton} activeOpacity={0.8} onPress={onBackPress}>
-          <Ionicons name="arrow-back" size={30} color="#0047ab" />
+          <Ionicons name="arrow-back" size={30} color="#005BAD" />
         </TouchableOpacity>
       ) : (
         <View style={styles.backButton} />
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   bottomNav: {
     height: 92,
-    backgroundColor: "#000080",
+    backgroundColor: "#005BAD",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "flex-start",
@@ -177,13 +177,13 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: "#1233cc",
+    backgroundColor: "#005BAD",
     borderWidth: 2,
   },
   activeIconCircle: {
     backgroundColor: "rgba(255, 255, 255, 0.25)",
   },
   activeIconCircleCenter: {
-    backgroundColor: "#1233cc",
+    backgroundColor: "#005BAD",
   },
 });

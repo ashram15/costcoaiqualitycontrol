@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   assessmentLink: {
     marginTop: 6,
-    color: "#0047ab",
+    color: "#005BAD",
     textDecorationLine: "underline",
     fontWeight: "600",
   },

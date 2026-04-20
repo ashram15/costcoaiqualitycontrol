@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   modalOverlay: {
     marginTop: "14%",
     marginHorizontal: 20,
-    backgroundColor: "#001f66",
+    backgroundColor: "#005BAD",
     borderRadius: 18,
     paddingVertical: 22,
     paddingHorizontal: 18,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalButtonText: {
-    color: "#001f66",
+    color: "#005BAD",
     fontSize: 16,
     fontWeight: "700",
   },

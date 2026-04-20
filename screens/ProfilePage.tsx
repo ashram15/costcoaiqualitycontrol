@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { flaggedProducts } from "../data";
 
 export default function ProfilePage({ onShowHistory }: { onShowHistory: () => void }) {
@@ -34,8 +34,11 @@ export default function ProfilePage({ onShowHistory }: { onShowHistory: () => vo
             {flaggedProducts.map((product) => (
               <View key={product.id} style={styles.productCard}>
                 <View style={styles.productSquare}>
-                  <Text style={styles.productSquareText}>{product.name}</Text>
+                  <Image source={product.image} style={styles.productImage} resizeMode="cover" />
                 </View>
+                <Text style={styles.productName} numberOfLines={2}>
+                  {product.name}
+                </Text>
                 <View style={styles.productActions}>
                   <TouchableOpacity activeOpacity={0.75}>
                     <Text style={styles.productActionLink}>Edit</Text>
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
   },
   scanHistoryButton: {
     width: "100%",
-    backgroundColor: "#0047ab",
+    backgroundColor: "#005BAD",
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: "center",
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   flaggedHeader: {
-    backgroundColor: "#0047ab",
+    backgroundColor: "#005BAD",
     paddingVertical: 10,
     paddingHorizontal: 12,
   },
@@ -142,22 +145,28 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 16,
-    backgroundColor: "#f08f84",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 8,
+    backgroundColor: "#f3f4f6",
+    overflow: "hidden",
+    marginBottom: 6,
   },
-  productSquareText: {
-    color: "#ffffff",
-    fontWeight: "700",
-    fontSize: 13,
+  productImage: {
+    width: "100%",
+    height: "100%",
+  },
+  productName: {
+    color: "#111827",
+    fontWeight: "600",
+    fontSize: 12,
+    textAlign: "center",
+    marginBottom: 6,
+    minHeight: 32,
   },
   productActions: {
     flexDirection: "row",
     alignItems: "center",
   },
   productActionLink: {
-    color: "#0047ab",
+    color: "#005BAD",
     textDecorationLine: "underline",
     fontSize: 12,
     fontWeight: "600",

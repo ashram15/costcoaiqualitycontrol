@@ -1,7 +1,7 @@
 export const flaggedProducts = [
-  { id: "p1", name: "Product 1" },
-  { id: "p2", name: "Product 2" },
-  { id: "p3", name: "Product 3" },
+  { id: "p1", name: "Apple", image: require("./assets/apple.png") },
+  { id: "p2", name: "Avocado", image: require("./assets/avocado.png") },
+  { id: "p3", name: "Organic Spinach", image: require("./assets/organicspinach.png") },
 ];
 
 export const scanHistory = [
