@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-interface MenuButton {
-  name: string;
-  color: string;
+interface HomeScreenProps {
+  onNavigate: (page: "scanner" | "profile") => void;
 }
 
-const HomeScreen: React.FC = () => {
-  const buttons: MenuButton[] = [
-    { name: 'Shop Costco', color: '#005DAA' },
-    { name: 'Product Freshness Scanner', color: '#E31837' },
-    { name: 'Scan History and Profile', color: '#E31837' },
-    { name: 'Warehouse Services', color: '#005DAA' },
-    { name: 'Current Orders', color: '#005DAA' },
-    { name: 'Staff Management Portal', color: '#E31837' },
+const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
+  // These buttons match your wireframe grid
+  const buttons = [
+    { name: 'Shop Costco', color: '#005DAA', action: null },
+    { name: 'Product Freshness Scanner', color: '#E31837', action: 'scanner' },
+    { name: 'Scan History and Profile', color: '#E31837', action: 'profile' },
+    { name: 'Warehouse Services', color: '#005DAA', action: null },
+    { name: 'Current Orders', color: '#005DAA', action: null },
+    { name: 'Staff Management Portal', color: '#E31837', action: null },
   ];
 
   return (
@@ -21,7 +21,12 @@ const HomeScreen: React.FC = () => {
       <Text style={styles.header}>Homepage</Text>
       <View style={styles.grid}>
         {buttons.map((btn, i) => (
-          <TouchableOpacity key={i} style={[styles.card, { backgroundColor: btn.color }]}>
+          <TouchableOpacity 
+            key={i} 
+            style={[styles.card, { backgroundColor: btn.color }]}
+            // Clicking the button now triggers the navigation logic in App.tsx
+            onPress={() => btn.action && onNavigate(btn.action as any)}
+          >
             <Text style={styles.cardText}>{btn.name}</Text>
           </TouchableOpacity>
         ))}
