@@ -6,7 +6,8 @@ import ScanHistoryPage from "./screens/ScanHistoryPage";
 import ScannerPage from "./screens/ScannerPage";
 import HomeScreen from './screens/HomeScreen';
 
-type Page = "scanner" | "profile" | "scanHistory";
+// Added "home" to the allowed pages
+type Page = "home" | "scanner" | "profile" | "scanHistory";
 
 const NAV_ITEMS = [
   { key: "home", icon: "home-outline" as const, lib: "ionicons" as const },
@@ -28,8 +29,9 @@ function BottomNav({
   onPageChange: (nextPage: Page) => void;
 }) {
   const onPressItem = (key: string) => {
-    if (key === "scanner" || key === "profile") {
-      onPageChange(key);
+    // Allows the bottom bar to navigate to home, scanner, or profile
+    if (key === "home" || key === "scanner" || key === "profile") {
+      onPageChange(key as Page);
     }
   };
 
@@ -88,16 +90,22 @@ function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
 }
 
 export default function App() {
-  const [page, setPage] = React.useState<Page>("profile");
+  // Changed the initial page to "home"
+  const [page, setPage] = React.useState<Page>("home");
 
   const renderPage = () => {
+    // Logic to decide which screen to show
+    if (page === "home") {
+      return <HomeScreen onNavigate={(target) => setPage(target)} />;
+    }
     if (page === "profile") {
       return <ProfilePage onShowHistory={() => setPage("scanHistory")} />;
     }
     if (page === "scanHistory") {
       return <ScanHistoryPage />;
     }
-    return <ScannerPage onScanAccepted={() => setPage("scanner")} />;
+    // After a scan is finished, it now goes back to the home screen
+    return <ScannerPage onScanAccepted={() => setPage("home")} />;
   };
 
   const handleBackPress = page === "scanHistory" ? () => setPage("profile") : undefined;
