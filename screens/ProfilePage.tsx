@@ -11,10 +11,10 @@ export default function ProfilePage({ onShowHistory }: { onShowHistory: () => vo
             <Ionicons name="person-outline" size={58} color="#ffffff" />
           </View>
           <View style={styles.profileDetails}>
-            <Text style={styles.profileNameText}>Name</Text>
-            <Text style={styles.profileDetailText}>Email</Text>
-            <Text style={styles.profileDetailText}>Membership ID</Text>
-            <Text style={styles.profileDetailText}>Product Flagging Rating : /5</Text>
+            <Text style={styles.profileNameText}>Jane Doe</Text>
+            <Text style={styles.profileDetailText}>jane.doe@example.com</Text>
+            <Text style={styles.profileDetailText}>Membership ID: CST-8472-9915</Text>
+            <Text style={styles.profileDetailText}>Product Flagging Rating: 4.6/5</Text>
           </View>
         </View>
 
