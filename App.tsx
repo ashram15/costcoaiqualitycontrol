@@ -3,12 +3,19 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
 import CartPage from "./screens/CartPage";
 import ProductAnalysisPage from "./screens/ProductAnalysisPage";
+import RecommendedProductsPage from "./screens/RecommendedProductsPage";
 import ProfilePage from "./screens/ProfilePage";
 import ScanHistoryPage from "./screens/ScanHistoryPage";
 import ScannerPage from "./screens/ScannerPage";
 import SignUpScreen from "./screens/SignUpScreen";
 
-type AppPage = "profile" | "scanHistory" | "scanner" | "productAnalysis" | "cart";
+type AppPage =
+  | "profile"
+  | "scanHistory"
+  | "scanner"
+  | "productAnalysis"
+  | "cart"
+  | "recommended";
 
 const NAV_ITEMS = [
   { key: "home", icon: "home-outline" as const, lib: "ionicons" as const },
@@ -29,6 +36,9 @@ function BottomNav({
     if (key === "home") {
       return page === "cart";
     }
+    if (key === "warehouse") {
+      return page === "recommended";
+    }
     if (key === "tag") {
       return page === "productAnalysis";
     }
@@ -41,6 +51,10 @@ function BottomNav({
   const onPressItem = (key: string) => {
     if (key === "home") {
       onPageChange("cart");
+      return;
+    }
+    if (key === "warehouse") {
+      onPageChange("recommended");
       return;
     }
     if (key === "scanner" || key === "profile" || key === "tag") {
@@ -109,21 +123,10 @@ function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
 
 export default function App() {
   const [inApp, setInApp] = React.useState(false);
-  const [authView, setAuthView] = React.useState<"signUp" | "productAnalysis">("signUp");
   const [appPage, setAppPage] = React.useState<AppPage>("profile");
 
   if (!inApp) {
-    if (authView === "productAnalysis") {
-      return (
-        <ProductAnalysisPage onBack={() => setAuthView("signUp")} />
-      );
-    }
-    return (
-      <SignUpScreen
-        onEnterApp={() => setInApp(true)}
-        onProductAnalysisPress={() => setAuthView("productAnalysis")}
-      />
-    );
+    return <SignUpScreen onEnterApp={() => setInApp(true)} />;
   }
 
   const handleBackPress =
@@ -142,10 +145,16 @@ export default function App() {
     if (appPage === "cart") {
       return <CartPage />;
     }
+    if (appPage === "recommended") {
+      return <RecommendedProductsPage />;
+    }
     return <ScannerPage onScanAccepted={() => setAppPage("scanner")} />;
   };
 
-  const showShellHeader = appPage !== "productAnalysis" && appPage !== "cart";
+  const showShellHeader =
+    appPage !== "productAnalysis" &&
+    appPage !== "cart" &&
+    appPage !== "recommended";
 
   return (
     <SafeAreaView style={styles.safeArea}>
