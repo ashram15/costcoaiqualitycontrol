@@ -9,9 +9,11 @@ import ScanHistoryPage from "./screens/ScanHistoryPage";
 import MarkForRemovalAdminScreen from "./screens/MarkForRemovalAdminScreen";
 import ScanResultScreen from "./screens/ScanResultScreen";
 import ScannerPage from "./screens/ScannerPage";
+import HomeScreen from "./screens/HomeScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 
 type AppPage =
+  | "home"
   | "profile"
   | "markForRemoval"
   | "scanHistory"
@@ -38,7 +40,7 @@ function BottomNav({
 }) {
   const isActive = (key: string) => {
     if (key === "home") {
-      return page === "cart";
+      return page === "home";
     }
     if (key === "warehouse") {
       return page === "recommended";
@@ -57,7 +59,7 @@ function BottomNav({
 
   const onPressItem = (key: string) => {
     if (key === "home") {
-      onPageChange("cart");
+      onPageChange("home");
       return;
     }
     if (key === "warehouse") {
@@ -130,7 +132,7 @@ function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
 
 export default function App() {
   const [inApp, setInApp] = React.useState(false);
-  const [appPage, setAppPage] = React.useState<AppPage>("profile");
+  const [appPage, setAppPage] = React.useState<AppPage>("home");
 
   if (!inApp) {
     return <SignUpScreen onEnterApp={() => setInApp(true)} />;
@@ -140,6 +142,17 @@ export default function App() {
     appPage === "scanHistory" ? () => setAppPage("profile") : undefined;
 
   const renderAppPage = () => {
+    if (appPage === "home") {
+      return (
+        <HomeScreen
+          onNavigate={(target) => {
+            if (target === "scanner" || target === "profile") {
+              setAppPage(target);
+            }
+          }}
+        />
+      );
+    }
     if (appPage === "profile") {
       return (
         <ProfilePage
@@ -176,6 +189,7 @@ export default function App() {
   };
 
   const showShellHeader =
+    appPage !== "home" &&
     appPage !== "productAnalysis" &&
     appPage !== "cart" &&
     appPage !== "recommended" &&
