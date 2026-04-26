@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "costcoaiqualitycontrol",
+    "slug": "costcoaiqualitycontrol",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/costco-logo.png",
+    "userInterfaceStyle": "light",
+    "scheme": "costcoaiqualitycontrol",
+    "plugins": ["expo-router"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      }
+    }
+  }
+}
