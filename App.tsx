@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
+import CartPage from "./screens/CartPage";
 import ProductAnalysisPage from "./screens/ProductAnalysisPage";
 import ProfilePage from "./screens/ProfilePage";
 import ScanHistoryPage from "./screens/ScanHistoryPage";
 import ScannerPage from "./screens/ScannerPage";
 import SignUpScreen from "./screens/SignUpScreen";
 
-type AppPage = "profile" | "scanHistory" | "scanner" | "productAnalysis";
+type AppPage = "profile" | "scanHistory" | "scanner" | "productAnalysis" | "cart";
 
 const NAV_ITEMS = [
   { key: "home", icon: "home-outline" as const, lib: "ionicons" as const },
@@ -25,6 +26,9 @@ function BottomNav({
   onPageChange: (nextPage: AppPage) => void;
 }) {
   const isActive = (key: string) => {
+    if (key === "home") {
+      return page === "cart";
+    }
     if (key === "tag") {
       return page === "productAnalysis";
     }
@@ -35,6 +39,10 @@ function BottomNav({
   };
 
   const onPressItem = (key: string) => {
+    if (key === "home") {
+      onPageChange("cart");
+      return;
+    }
     if (key === "scanner" || key === "profile" || key === "tag") {
       if (key === "tag") {
         onPageChange("productAnalysis");
@@ -131,10 +139,13 @@ export default function App() {
     if (appPage === "productAnalysis") {
       return <ProductAnalysisPage onBack={() => setAppPage("profile")} />;
     }
+    if (appPage === "cart") {
+      return <CartPage />;
+    }
     return <ScannerPage onScanAccepted={() => setAppPage("scanner")} />;
   };
 
-  const showShellHeader = appPage !== "productAnalysis";
+  const showShellHeader = appPage !== "productAnalysis" && appPage !== "cart";
 
   return (
     <SafeAreaView style={styles.safeArea}>
