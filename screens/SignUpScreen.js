@@ -18,7 +18,7 @@ const PLACEHOLDER_GREY = '#BDBDBD';
 const INPUT_BG = '#F5F5F5';
 const INPUT_BORDER = '#E8E8E8';
 
-export default function SignUpScreen() {
+export default function SignUpScreen({ onProductAnalysisPress }) {
   return (
     <KeyboardAvoidingView
       style={styles.root}
@@ -86,6 +86,15 @@ export default function SignUpScreen() {
           >
             <Text style={styles.buttonText}>Sign up</Text>
           </Pressable>
+
+          {onProductAnalysisPress ? (
+            <Pressable
+              onPress={onProductAnalysisPress}
+              style={({ pressed }) => [styles.demoLinkWrap, pressed && { opacity: 0.8 }]}
+            >
+              <Text style={styles.demoLink}>View product analysis (demo)</Text>
+            </Pressable>
+          ) : null}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -170,5 +179,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 17,
     fontWeight: '700',
+  },
+  demoLinkWrap: {
+    marginTop: 20,
+    paddingVertical: 8,
+  },
+  demoLink: {
+    color: BUTTON_BLUE,
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
   },
 });

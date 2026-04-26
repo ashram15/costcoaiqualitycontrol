@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "_expo_staging",
-    "slug": "_expo_staging",
+    "name": "costcoaiqualitycontrol",
+    "slug": "costcoaiqualitycontrol",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
