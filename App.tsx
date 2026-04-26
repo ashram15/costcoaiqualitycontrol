@@ -7,6 +7,7 @@ import RecommendedProductsPage from "./screens/RecommendedProductsPage";
 import ProfilePage from "./screens/ProfilePage";
 import ScanHistoryPage from "./screens/ScanHistoryPage";
 import MarkForRemovalAdminScreen from "./screens/MarkForRemovalAdminScreen";
+import ScanDashboardAdminPage from "./screens/ScanDashboardAdminPage";
 import ScanResultScreen from "./screens/ScanResultScreen";
 import ScannerPage from "./screens/ScannerPage";
 import HomeScreen from "./screens/HomeScreen";
@@ -18,6 +19,7 @@ type AppPage =
   | "home"
   | "profile"
   | "markForRemoval"
+  | "scanDashboardAdmin"
   | "scanHistory"
   | "scanner"
   | "scanResult"
@@ -54,7 +56,7 @@ function BottomNav({
       return page === "scanner" || page === "scanResult";
     }
     if (key === "profile") {
-      return page === "profile" || page === "markForRemoval";
+      return page === "profile" || page === "markForRemoval" || page === "scanDashboardAdmin";
     }
     return false;
   };
@@ -163,11 +165,15 @@ export default function App() {
         <ProfilePage
           onShowHistory={() => setAppPage("scanHistory")}
           onOpenMarkForRemoval={() => setAppPage("markForRemoval")}
+          onOpenScanDashboardAdmin={() => setAppPage("scanDashboardAdmin")}
         />
       );
     }
     if (appPage === "markForRemoval") {
       return <MarkForRemovalAdminScreen onBack={() => setAppPage("profile")} />;
+    }
+    if (appPage === "scanDashboardAdmin") {
+      return <ScanDashboardAdminPage onBack={() => setAppPage("profile")} />;
     }
     if (appPage === "scanHistory") {
       return <ScanHistoryPage />;
@@ -200,7 +206,8 @@ export default function App() {
     appPage !== "cart" &&
     appPage !== "recommended" &&
     appPage !== "scanResult" &&
-    appPage !== "markForRemoval";
+    appPage !== "markForRemoval" &&
+    appPage !== "scanDashboardAdmin";
 
   return (
     <SafeAreaView style={styles.safeArea}>

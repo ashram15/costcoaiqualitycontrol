@@ -5,9 +5,11 @@ import { flaggedProducts } from "../data";
 export default function ProfilePage({
   onShowHistory,
   onOpenMarkForRemoval,
+  onOpenScanDashboardAdmin,
 }: {
   onShowHistory: () => void;
   onOpenMarkForRemoval?: () => void;
+  onOpenScanDashboardAdmin?: () => void;
 }) {
   return (
     <View style={styles.screen}>
@@ -39,6 +41,16 @@ export default function ProfilePage({
             onPress={onOpenMarkForRemoval}
           >
             <Text style={styles.adminButtonText}>Mark for removal (admin)</Text>
+          </TouchableOpacity>
+        ) : null}
+
+        {onOpenScanDashboardAdmin ? (
+          <TouchableOpacity
+            style={styles.scanDashboardButton}
+            activeOpacity={0.85}
+            onPress={onOpenScanDashboardAdmin}
+          >
+            <Text style={styles.scanDashboardButtonText}>Scan dashboard (admin)</Text>
           </TouchableOpacity>
         ) : null}
 
@@ -136,10 +148,25 @@ const styles = StyleSheet.create({
     borderColor: "#E61031",
     paddingVertical: 12,
     alignItems: "center",
-    marginBottom: 22,
+    marginBottom: 12,
   },
   adminButtonText: {
     color: "#E61031",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  scanDashboardButton: {
+    width: "100%",
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#005BAD",
+    paddingVertical: 12,
+    alignItems: "center",
+    marginBottom: 22,
+  },
+  scanDashboardButtonText: {
+    color: "#005BAD",
     fontSize: 15,
     fontWeight: "700",
   },
