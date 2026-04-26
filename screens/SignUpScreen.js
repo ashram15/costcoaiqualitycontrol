@@ -18,7 +18,7 @@ const PLACEHOLDER_GREY = '#BDBDBD';
 const INPUT_BG = '#F5F5F5';
 const INPUT_BORDER = '#E8E8E8';
 
-export default function SignUpScreen({ onProductAnalysisPress }) {
+export default function SignUpScreen({ onProductAnalysisPress, onEnterApp }) {
   return (
     <KeyboardAvoidingView
       style={styles.root}
@@ -93,6 +93,15 @@ export default function SignUpScreen({ onProductAnalysisPress }) {
               style={({ pressed }) => [styles.demoLinkWrap, pressed && { opacity: 0.8 }]}
             >
               <Text style={styles.demoLink}>View product analysis (demo)</Text>
+            </Pressable>
+          ) : null}
+
+          {onEnterApp ? (
+            <Pressable
+              onPress={onEnterApp}
+              style={({ pressed }) => [styles.enterApp, pressed && styles.buttonPressed]}
+            >
+              <Text style={styles.enterAppText}>Continue to app</Text>
             </Pressable>
           ) : null}
         </View>
@@ -190,5 +199,21 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     textDecorationLine: 'underline',
+  },
+  enterApp: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: BUTTON_BLUE,
+    paddingVertical: 14,
+    borderRadius: 4,
+    marginTop: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  enterAppText: {
+    color: BUTTON_BLUE,
+    fontSize: 16,
+    fontWeight: '700',
   },
 });
