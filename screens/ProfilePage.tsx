@@ -2,7 +2,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { flaggedProducts } from "../data";
 
-export default function ProfilePage({ onShowHistory }: { onShowHistory: () => void }) {
+export default function ProfilePage({
+  onShowHistory,
+  onOpenMarkForRemoval,
+}: {
+  onShowHistory: () => void;
+  onOpenMarkForRemoval?: () => void;
+}) {
   return (
     <View style={styles.screen}>
       <View style={styles.profileContent}>
@@ -25,6 +31,16 @@ export default function ProfilePage({ onShowHistory }: { onShowHistory: () => vo
         >
           <Text style={styles.scanHistoryText}>See Scan History</Text>
         </TouchableOpacity>
+
+        {onOpenMarkForRemoval ? (
+          <TouchableOpacity
+            style={styles.adminButton}
+            activeOpacity={0.85}
+            onPress={onOpenMarkForRemoval}
+          >
+            <Text style={styles.adminButtonText}>Mark for removal (admin)</Text>
+          </TouchableOpacity>
+        ) : null}
 
         <View style={styles.flaggedSection}>
           <View style={styles.flaggedHeader}>
@@ -105,11 +121,26 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: "center",
     marginTop: 20,
-    marginBottom: 22,
+    marginBottom: 12,
   },
   scanHistoryText: {
     color: "#ffffff",
     fontSize: 16,
+    fontWeight: "700",
+  },
+  adminButton: {
+    width: "100%",
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#E61031",
+    paddingVertical: 12,
+    alignItems: "center",
+    marginBottom: 22,
+  },
+  adminButtonText: {
+    color: "#E61031",
+    fontSize: 15,
     fontWeight: "700",
   },
   flaggedSection: {

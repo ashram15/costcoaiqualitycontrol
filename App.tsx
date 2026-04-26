@@ -6,12 +6,14 @@ import ProductAnalysisPage from "./screens/ProductAnalysisPage";
 import RecommendedProductsPage from "./screens/RecommendedProductsPage";
 import ProfilePage from "./screens/ProfilePage";
 import ScanHistoryPage from "./screens/ScanHistoryPage";
+import MarkForRemovalAdminScreen from "./screens/MarkForRemovalAdminScreen";
 import ScanResultScreen from "./screens/ScanResultScreen";
 import ScannerPage from "./screens/ScannerPage";
 import SignUpScreen from "./screens/SignUpScreen";
 
 type AppPage =
   | "profile"
+  | "markForRemoval"
   | "scanHistory"
   | "scanner"
   | "scanResult"
@@ -48,7 +50,7 @@ function BottomNav({
       return page === "scanner" || page === "scanResult";
     }
     if (key === "profile") {
-      return page === "profile";
+      return page === "profile" || page === "markForRemoval";
     }
     return false;
   };
@@ -139,7 +141,15 @@ export default function App() {
 
   const renderAppPage = () => {
     if (appPage === "profile") {
-      return <ProfilePage onShowHistory={() => setAppPage("scanHistory")} />;
+      return (
+        <ProfilePage
+          onShowHistory={() => setAppPage("scanHistory")}
+          onOpenMarkForRemoval={() => setAppPage("markForRemoval")}
+        />
+      );
+    }
+    if (appPage === "markForRemoval") {
+      return <MarkForRemovalAdminScreen onBack={() => setAppPage("profile")} />;
     }
     if (appPage === "scanHistory") {
       return <ScanHistoryPage />;
@@ -169,7 +179,8 @@ export default function App() {
     appPage !== "productAnalysis" &&
     appPage !== "cart" &&
     appPage !== "recommended" &&
-    appPage !== "scanResult";
+    appPage !== "scanResult" &&
+    appPage !== "markForRemoval";
 
   return (
     <SafeAreaView style={styles.safeArea}>
