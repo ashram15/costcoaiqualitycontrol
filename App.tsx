@@ -10,9 +10,11 @@ import MarkForRemovalAdminScreen from "./screens/MarkForRemovalAdminScreen";
 import ScanResultScreen from "./screens/ScanResultScreen";
 import ScannerPage from "./screens/ScannerPage";
 import HomeScreen from "./screens/HomeScreen";
+import InstructionsPage from "./screens/InstructionsPage";
 import SignUpScreen from "./screens/SignUpScreen";
 
 type AppPage =
+  | "instructions"
   | "home"
   | "profile"
   | "markForRemoval"
@@ -40,7 +42,7 @@ function BottomNav({
 }) {
   const isActive = (key: string) => {
     if (key === "home") {
-      return page === "home";
+      return page === "home" || page === "instructions";
     }
     if (key === "warehouse") {
       return page === "recommended";
@@ -132,7 +134,7 @@ function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
 
 export default function App() {
   const [inApp, setInApp] = React.useState(false);
-  const [appPage, setAppPage] = React.useState<AppPage>("home");
+  const [appPage, setAppPage] = React.useState<AppPage>("instructions");
 
   if (!inApp) {
     return <SignUpScreen onEnterApp={() => setInApp(true)} />;
@@ -142,6 +144,9 @@ export default function App() {
     appPage === "scanHistory" ? () => setAppPage("profile") : undefined;
 
   const renderAppPage = () => {
+    if (appPage === "instructions") {
+      return <InstructionsPage onConfirm={() => setAppPage("home")} />;
+    }
     if (appPage === "home") {
       return (
         <HomeScreen
@@ -189,6 +194,7 @@ export default function App() {
   };
 
   const showShellHeader =
+    appPage !== "instructions" &&
     appPage !== "home" &&
     appPage !== "productAnalysis" &&
     appPage !== "cart" &&
