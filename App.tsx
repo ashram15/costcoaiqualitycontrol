@@ -6,6 +6,7 @@ import ProductAnalysisPage from "./screens/ProductAnalysisPage";
 import RecommendedProductsPage from "./screens/RecommendedProductsPage";
 import ProfilePage from "./screens/ProfilePage";
 import ScanHistoryPage from "./screens/ScanHistoryPage";
+import ScanResultScreen from "./screens/ScanResultScreen";
 import ScannerPage from "./screens/ScannerPage";
 import SignUpScreen from "./screens/SignUpScreen";
 
@@ -13,6 +14,7 @@ type AppPage =
   | "profile"
   | "scanHistory"
   | "scanner"
+  | "scanResult"
   | "productAnalysis"
   | "cart"
   | "recommended";
@@ -42,8 +44,11 @@ function BottomNav({
     if (key === "tag") {
       return page === "productAnalysis";
     }
-    if (key === "scanner" || key === "profile") {
-      return page === key;
+    if (key === "scanner") {
+      return page === "scanner" || page === "scanResult";
+    }
+    if (key === "profile") {
+      return page === "profile";
     }
     return false;
   };
@@ -148,13 +153,23 @@ export default function App() {
     if (appPage === "recommended") {
       return <RecommendedProductsPage />;
     }
-    return <ScannerPage onScanAccepted={() => setAppPage("scanner")} />;
+    if (appPage === "scanResult") {
+      return (
+        <ScanResultScreen
+          onBack={() => setAppPage("scanner")}
+          onViewAnalysis={() => setAppPage("productAnalysis")}
+          onGoToCart={() => setAppPage("cart")}
+        />
+      );
+    }
+    return <ScannerPage onScanAccepted={() => setAppPage("scanResult")} />;
   };
 
   const showShellHeader =
     appPage !== "productAnalysis" &&
     appPage !== "cart" &&
-    appPage !== "recommended";
+    appPage !== "recommended" &&
+    appPage !== "scanResult";
 
   return (
     <SafeAreaView style={styles.safeArea}>
