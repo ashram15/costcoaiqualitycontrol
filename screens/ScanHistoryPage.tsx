@@ -1,5 +1,6 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { scanHistory } from "../data";
+import { COLORS } from "../constants/colors";
 
 export default function ScanHistoryPage() {
   const formatDateToMMDDYYYY = (rawDate: string) => {
@@ -80,7 +81,7 @@ export default function ScanHistoryPage() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
   },
   scanHistoryList: {
     paddingVertical: 14,
@@ -88,10 +89,10 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   scanHistoryCard: {
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: "#dbe0f0",
+    borderColor: COLORS.BORDER_CARD,
     padding: 12,
     marginBottom: 12,
   },
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 14,
-    backgroundColor: "#f08f84",
+    backgroundColor: COLORS.INPUT_BG,
     marginRight: 12,
     overflow: "hidden",
   },
@@ -115,29 +116,29 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scanCardText: {
-    color: "#1f2937",
+    color: COLORS.TEXT_BODY,
     fontSize: 13,
     marginBottom: 3,
   },
   scanCardLabel: {
     fontWeight: "700",
-    color: "#111827",
+    color: COLORS.TEXT_PRIMARY,
   },
   statusCritical: {
-    color: "#dc2626",
+    color: COLORS.PRIMARY_RED,
     fontWeight: "700",
   },
   statusFair: {
-    color: "#f59e0b",
+    color: COLORS.STATUS_WARN,
     fontWeight: "700",
   },
   statusLow: {
-    color: "#16a34a",
+    color: COLORS.STATUS_OK,
     fontWeight: "700",
   },
   assessmentLink: {
     marginTop: 6,
-    color: "#005BAD",
+    color: COLORS.PRIMARY_BLUE,
     textDecorationLine: "underline",
     fontWeight: "600",
   },

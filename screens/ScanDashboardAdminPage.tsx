@@ -1,14 +1,8 @@
 import * as React from "react";
-import {
-  Dimensions,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { COLORS } from "../constants/colors";
+import { HIT_SLOP, ICON, backButtonLightBg } from "../constants/ui";
+import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 
@@ -20,13 +14,15 @@ export default function ScanDashboardAdminPage({ onBack }: ScanDashboardAdminPag
   return (
     <SafeAreaView style={styles.container}>
       {onBack ? (
-        <Pressable
+        <TouchableOpacity
           onPress={onBack}
-          style={({ pressed }) => [styles.backRow, pressed && { opacity: 0.75 }]}
-          hitSlop={8}
+          activeOpacity={0.7}
+          hitSlop={HIT_SLOP}
+          style={styles.backButton}
+          accessibilityLabel="Back"
         >
-          <Text style={styles.backText}>← Back to profile</Text>
-        </Pressable>
+          <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
+        </TouchableOpacity>
       ) : null}
 
       {/* Top Navigation Bar */}
@@ -129,19 +125,17 @@ export default function ScanDashboardAdminPage({ onBack }: ScanDashboardAdminPag
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
   },
-  backRow: {
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-  },
-  backText: {
-    color: "#005BAD",
-    fontSize: 15,
-    fontWeight: "600",
+  backButton: {
+    ...backButtonLightBg,
+    alignSelf: "flex-start",
+    marginLeft: 8,
+    marginTop: 4,
+    marginBottom: 2,
   },
   topBar: {
-    backgroundColor: "#5271FF",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 15,
@@ -149,7 +143,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   menuIconContainer: {
-    backgroundColor: "#003399",
+    backgroundColor: COLORS.BLUE_DEEP,
     width: 40,
     height: 40,
     borderRadius: 20,
@@ -160,12 +154,12 @@ const styles = StyleSheet.create({
   hamburgerLine: {
     width: 20,
     height: 2,
-    backgroundColor: "#000",
+    backgroundColor: COLORS.WHITE,
     marginVertical: 2,
   },
   searchBarPlaceholder: {
     flex: 1,
-    backgroundColor: "#A9A9A9",
+    backgroundColor: COLORS.BORDER_LIGHT,
     height: 24,
     borderRadius: 12,
   },
@@ -175,7 +169,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   mainTitle: {
-    color: "#FF4D4D",
+    color: COLORS.PRIMARY_RED,
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
@@ -198,20 +192,20 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   bgBlue: {
-    backgroundColor: "#0047AB",
+    backgroundColor: COLORS.PRIMARY_BLUE,
   },
   bgRed: {
-    backgroundColor: "#FF3333",
+    backgroundColor: COLORS.PRIMARY_RED,
   },
   buttonText: {
-    color: "#ffffff",
+    color: COLORS.WHITE,
     textAlign: "center",
     fontWeight: "600",
     fontSize: 12,
     lineHeight: 16,
   },
   subtitle: {
-    color: "#FF4D4D",
+    color: COLORS.PRIMARY_RED,
     fontSize: 14,
     fontWeight: "bold",
     marginBottom: 20,
@@ -225,7 +219,7 @@ const styles = StyleSheet.create({
   },
   fullLine: {
     height: 2,
-    backgroundColor: "#000",
+    backgroundColor: COLORS.BORDER_LIGHT,
     width: "100%",
     marginBottom: 20,
   },
@@ -240,7 +234,7 @@ const styles = StyleSheet.create({
   },
   halfLine: {
     height: 2,
-    backgroundColor: "#000",
+    backgroundColor: COLORS.BORDER_LIGHT,
     width: "100%",
     marginBottom: 20,
   },
@@ -259,7 +253,7 @@ const styles = StyleSheet.create({
   },
   gridLine: {
     height: 1,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: COLORS.BORDER_LIGHT,
     width: "100%",
   },
   chartYAxis: {
@@ -268,7 +262,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     width: 1,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: COLORS.BORDER_LIGHT,
   },
   chartXAxis: {
     position: "absolute",
@@ -276,7 +270,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: 1,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: COLORS.BORDER_LIGHT,
   },
   mountain1: {
     position: "absolute",
@@ -284,10 +278,10 @@ const styles = StyleSheet.create({
     left: 30,
     width: 60,
     height: 80,
-    backgroundColor: "#A0E4F5",
+    backgroundColor: COLORS.CHART_TINT_A,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 20,
-    opacity: 0.8,
+    opacity: 0.9,
   },
   mountain1Overlay: {
     position: "absolute",
@@ -295,10 +289,10 @@ const styles = StyleSheet.create({
     left: 70,
     width: 40,
     height: 50,
-    backgroundColor: "#A0E4F5",
+    backgroundColor: COLORS.CHART_TINT_A,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    opacity: 0.8,
+    opacity: 0.9,
   },
   mountain2: {
     position: "absolute",
@@ -306,10 +300,10 @@ const styles = StyleSheet.create({
     left: 60,
     width: 80,
     height: 130,
-    backgroundColor: "#63C5DA",
+    backgroundColor: COLORS.CHART_TINT_B,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 30,
-    opacity: 0.8,
+    opacity: 0.9,
   },
   bottomBar: {
     flexDirection: "row",
@@ -319,9 +313,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomDark: {
-    backgroundColor: "#0047AB",
+    backgroundColor: COLORS.PRIMARY_BLUE,
   },
   bottomLight: {
-    backgroundColor: "#5271FF",
+    backgroundColor: "rgba(0, 91, 173, 0.45)",
   },
 });

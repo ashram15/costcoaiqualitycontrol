@@ -9,14 +9,8 @@ import {
   View,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-
-/** Match scan result palette */
-const RED = '#E61031'; /* Medium Candy Apple Red */
-const BUTTON_BLUE = '#005BAD'; /* Medium Persian Blue */
-const LABEL_GREY = '#9E9E9E';
-const PLACEHOLDER_GREY = '#BDBDBD';
-const INPUT_BG = '#F5F5F5';
-const INPUT_BORDER = '#E8E8E8';
+import { COLORS } from '../constants/colors';
+import { RADIUS } from '../constants/ui';
 
 export default function SignUpScreen({ onEnterApp }) {
   return (
@@ -46,7 +40,7 @@ export default function SignUpScreen({ onEnterApp }) {
             <TextInput
               style={styles.input}
               placeholder="John Doe"
-              placeholderTextColor={PLACEHOLDER_GREY}
+              placeholderTextColor={COLORS.PLACEHOLDER_GREY}
             />
           </View>
 
@@ -55,7 +49,7 @@ export default function SignUpScreen({ onEnterApp }) {
             <TextInput
               style={styles.input}
               placeholder="example@costco.com"
-              placeholderTextColor={PLACEHOLDER_GREY}
+              placeholderTextColor={COLORS.PLACEHOLDER_GREY}
               keyboardType="email-address"
               autoCapitalize="none"
             />
@@ -66,7 +60,7 @@ export default function SignUpScreen({ onEnterApp }) {
             <TextInput
               style={styles.input}
               placeholder="....."
-              placeholderTextColor={PLACEHOLDER_GREY}
+              placeholderTextColor={COLORS.PLACEHOLDER_GREY}
               secureTextEntry
             />
           </View>
@@ -76,25 +70,16 @@ export default function SignUpScreen({ onEnterApp }) {
             <TextInput
               style={styles.input}
               placeholder="Sign up"
-              placeholderTextColor={PLACEHOLDER_GREY}
+              placeholderTextColor={COLORS.PLACEHOLDER_GREY}
             />
           </View>
 
           <Pressable
             style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-            onPress={() => {}}
+            onPress={onEnterApp}
           >
             <Text style={styles.buttonText}>Sign up</Text>
           </Pressable>
-
-          {onEnterApp ? (
-            <Pressable
-              onPress={onEnterApp}
-              style={({ pressed }) => [styles.enterApp, pressed && styles.buttonPressed]}
-            >
-              <Text style={styles.enterAppText}>Continue to app</Text>
-            </Pressable>
-          ) : null}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -104,7 +89,7 @@ export default function SignUpScreen({ onEnterApp }) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.WHITE,
   },
   scroll: {
     flex: 1,
@@ -124,19 +109,19 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: '700',
-    color: RED,
+    color: COLORS.PRIMARY_RED,
     textAlign: 'center',
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 14,
-    color: LABEL_GREY,
+    color: COLORS.LABEL_GREY,
     textAlign: 'center',
     marginBottom: 36,
   },
   link: {
     textDecorationLine: 'underline',
-    color: BUTTON_BLUE,
+    color: COLORS.PRIMARY_BLUE,
     fontWeight: '600',
   },
   field: {
@@ -147,27 +132,27 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     letterSpacing: 0.8,
-    color: LABEL_GREY,
+    color: COLORS.LABEL_GREY,
     marginBottom: 8,
     textAlign: 'center',
   },
   input: {
     width: '100%',
-    backgroundColor: INPUT_BG,
+    backgroundColor: COLORS.INPUT_BG,
     borderWidth: 1,
-    borderColor: INPUT_BORDER,
-    borderRadius: 4,
+    borderColor: COLORS.INPUT_BORDER,
+    borderRadius: RADIUS.md,
     paddingVertical: 14,
     paddingHorizontal: 16,
     fontSize: 16,
-    color: '#424242',
+    color: COLORS.TEXT_SECONDARY,
     textAlign: 'center',
   },
   button: {
     width: '100%',
-    backgroundColor: BUTTON_BLUE,
+    backgroundColor: COLORS.PRIMARY_BLUE,
     paddingVertical: 16,
-    borderRadius: 4,
+    borderRadius: RADIUS.md,
     marginTop: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -176,24 +161,8 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   buttonText: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontSize: 17,
-    fontWeight: '700',
-  },
-  enterApp: {
-    width: '100%',
-    backgroundColor: '#fff',
-    borderWidth: 2,
-    borderColor: BUTTON_BLUE,
-    paddingVertical: 14,
-    borderRadius: 4,
-    marginTop: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  enterAppText: {
-    color: BUTTON_BLUE,
-    fontSize: 16,
     fontWeight: '700',
   },
 });

@@ -1,15 +1,9 @@
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-/** Match app palette: Medium Candy Apple Red, Medium Persian Blue */
-const COSTCO_RED = '#E61031';
-const COSTCO_BLUE = '#005BAD';
-const TITLE_GREY = '#757575';
-const CARD_BG = '#EEEEEE';
-const THUMB_BG = '#D8D8D8';
-const PILL_GREY_BG = '#BDBDBD';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { COLORS } from '../constants/colors';
+import { HIT_SLOP, ICON, backButtonLightBg } from '../constants/ui';
 
 /** Hardcoded demo rows — swap for real data later */
 const REMOVAL_ROWS = [
@@ -55,7 +49,7 @@ function StarRow({ filled }) {
           key={i}
           name={i < filled ? 'star' : 'star-outline'}
           size={20}
-          color={COSTCO_BLUE}
+          color={COLORS.PRIMARY_BLUE}
           style={styles.starIcon}
         />
       ))}
@@ -106,17 +100,18 @@ export default function MarkForRemovalAdminScreen({ onBack } = {}) {
       >
         <View style={styles.inner}>
           {onBack ? (
-            <Pressable
+            <TouchableOpacity
               onPress={onBack}
-              style={({ pressed }) => [styles.backRow, pressed && { opacity: 0.75 }]}
-              hitSlop={8}
+              activeOpacity={0.7}
+              hitSlop={HIT_SLOP}
+              style={styles.backButton}
+              accessibilityLabel="Back"
             >
-              <MaterialCommunityIcons name="chevron-left" size={28} color={COSTCO_BLUE} />
-              <Text style={styles.backText}>Back to profile</Text>
-            </Pressable>
+              <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
+            </TouchableOpacity>
           ) : null}
           <Image
-            source={require('../assets/costco-logo.png')}
+            source={require('../assets/costcologo.png')}
             style={styles.logo}
             resizeMode="contain"
             accessibilityLabel="Costco Wholesale logo"
@@ -144,7 +139,7 @@ export default function MarkForRemovalAdminScreen({ onBack } = {}) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.WHITE,
   },
   scrollContent: {
     alignItems: 'center',
@@ -155,16 +150,10 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     alignItems: 'center',
   },
-  backRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  backButton: {
+    ...backButtonLightBg,
     alignSelf: 'flex-start',
     marginBottom: 12,
-  },
-  backText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: COSTCO_BLUE,
   },
   logo: {
     width: '100%',
@@ -175,7 +164,7 @@ const styles = StyleSheet.create({
   adminLabel: {
     fontSize: 22,
     fontWeight: '800',
-    color: COSTCO_RED,
+    color: COLORS.PRIMARY_RED,
     textAlign: 'center',
     marginBottom: 8,
     letterSpacing: 1,
@@ -183,14 +172,14 @@ const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: TITLE_GREY,
+    color: COLORS.TEXT_SUBHEAD,
     textAlign: 'center',
     marginBottom: 20,
   },
   card: {
     width: '100%',
     flexDirection: 'row',
-    backgroundColor: CARD_BG,
+    backgroundColor: COLORS.SURFACE_MUTED,
     borderRadius: 14,
     padding: 12,
     marginBottom: 14,
@@ -200,7 +189,7 @@ const styles = StyleSheet.create({
     width: 92,
     height: 92,
     borderRadius: 10,
-    backgroundColor: THUMB_BG,
+    backgroundColor: COLORS.THUMB_PLACEHOLDER,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
@@ -215,21 +204,21 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   pillBlue: {
-    backgroundColor: COSTCO_BLUE,
+    backgroundColor: COLORS.PRIMARY_BLUE,
     borderRadius: 6,
     paddingVertical: 8,
     paddingHorizontal: 10,
     marginBottom: 6,
   },
   pillGrey: {
-    backgroundColor: PILL_GREY_BG,
+    backgroundColor: COLORS.PILL_GREY,
     borderRadius: 6,
     paddingVertical: 8,
     paddingHorizontal: 10,
     marginBottom: 6,
   },
   pillWhiteText: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontSize: 13,
     fontWeight: '600',
   },

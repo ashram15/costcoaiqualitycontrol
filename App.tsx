@@ -1,6 +1,9 @@
 import * as React from "react";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { COLORS } from "./constants/colors";
+import { HIT_SLOP, ICON, backButtonLightBg } from "./constants/ui";
 import CartPage from "./screens/CartPage";
 import ProductAnalysisPage from "./screens/ProductAnalysisPage";
 import RecommendedProductsPage from "./screens/RecommendedProductsPage";
@@ -44,16 +47,21 @@ function BottomNav({
 }) {
   const isActive = (key: string) => {
     if (key === "home") {
-      return page === "home" || page === "instructions";
+      return page === "home";
     }
     if (key === "warehouse") {
-      return page === "recommended";
+      return page === "instructions";
     }
     if (key === "tag") {
-      return page === "productAnalysis";
+      return page === "cart";
     }
     if (key === "scanner") {
-      return page === "scanner" || page === "scanResult";
+      return (
+        page === "scanner" ||
+        page === "scanResult" ||
+        page === "productAnalysis" ||
+        page === "recommended"
+      );
     }
     if (key === "profile") {
       return page === "profile" || page === "markForRemoval" || page === "scanDashboardAdmin";
@@ -67,15 +75,15 @@ function BottomNav({
       return;
     }
     if (key === "warehouse") {
-      onPageChange("recommended");
+      onPageChange("instructions");
       return;
     }
-    if (key === "scanner" || key === "profile" || key === "tag") {
-      if (key === "tag") {
-        onPageChange("productAnalysis");
-      } else {
-        onPageChange(key);
-      }
+    if (key === "tag") {
+      onPageChange("cart");
+      return;
+    }
+    if (key === "scanner" || key === "profile") {
+      onPageChange(key);
     }
   };
 
@@ -103,10 +111,10 @@ function BottomNav({
               <MaterialCommunityIcons
                 name={item.icon}
                 size={item.isCenter ? 36 : 24}
-                color="#ffffff"
+                color={COLORS.WHITE}
               />
             ) : (
-              <Ionicons name={item.icon} size={item.isCenter ? 36 : 24} color="#ffffff" />
+              <Ionicons name={item.icon} size={item.isCenter ? 36 : 24} color={COLORS.WHITE} />
             )}
           </View>
         </TouchableOpacity>
@@ -117,10 +125,15 @@ function BottomNav({
 
 function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
   return (
-    <View style={styles.header}>
+    <View style={styles.topBannerRow}>
       {onBackPress ? (
-        <TouchableOpacity style={styles.backButton} activeOpacity={0.8} onPress={onBackPress}>
-          <Ionicons name="arrow-back" size={30} color="#005BAD" />
+        <TouchableOpacity
+          style={styles.backButton}
+          activeOpacity={0.7}
+          onPress={onBackPress}
+          hitSlop={HIT_SLOP}
+        >
+          <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
         </TouchableOpacity>
       ) : (
         <View style={styles.backButton} />
@@ -135,11 +148,19 @@ function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
 }
 
 export default function App() {
+  const insets = useSafeAreaInsets();
   const [inApp, setInApp] = React.useState(false);
-  const [appPage, setAppPage] = React.useState<AppPage>("instructions");
+  const [appPage, setAppPage] = React.useState<AppPage>("home");
 
   if (!inApp) {
-    return <SignUpScreen onEnterApp={() => setInApp(true)} />;
+    return (
+      <SignUpScreen
+        onEnterApp={() => {
+          setInApp(true);
+          setAppPage("home");
+        }}
+      />
+    );
   }
 
   const handleBackPress =
@@ -147,7 +168,7 @@ export default function App() {
 
   const renderAppPage = () => {
     if (appPage === "instructions") {
-      return <InstructionsPage onConfirm={() => setAppPage("home")} />;
+      return <InstructionsPage onConfirm={() => setAppPage("scanner")} />;
     }
     if (appPage === "home") {
       return (
@@ -179,13 +200,24 @@ export default function App() {
       return <ScanHistoryPage />;
     }
     if (appPage === "productAnalysis") {
-      return <ProductAnalysisPage onBack={() => setAppPage("profile")} />;
+      return (
+        <ProductAnalysisPage
+          onBack={() => setAppPage("scanner")}
+          onGoToCart={() => setAppPage("cart")}
+          onFindAlternatives={() => setAppPage("recommended")}
+        />
+      );
     }
     if (appPage === "cart") {
       return <CartPage />;
     }
     if (appPage === "recommended") {
-      return <RecommendedProductsPage />;
+      return (
+        <RecommendedProductsPage
+          onBack={() => setAppPage("productAnalysis")}
+          onGoToCart={() => setAppPage("cart")}
+        />
+      );
     }
     if (appPage === "scanResult") {
       return (
@@ -210,12 +242,16 @@ export default function App() {
     appPage !== "scanDashboardAdmin";
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} />
       <View style={styles.mobileView}>
         {showShellHeader ? <TopBanner onBackPress={handleBackPress} /> : null}
         <View style={styles.pageFill}>{renderAppPage()}</View>
-        <BottomNav page={appPage} onPageChange={setAppPage} />
+        <View
+          style={[styles.bottomNavHost, { paddingBottom: insets.bottom }]}
+        >
+          <BottomNav page={appPage} onPageChange={setAppPage} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -224,7 +260,7 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: COLORS.WHITE,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -232,34 +268,36 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 450,
     height: "100%",
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
   },
   pageFill: {
     flex: 1,
+    backgroundColor: COLORS.WHITE,
   },
-  header: {
+  topBannerRow: {
     height: 74,
     paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    borderBottomWidth: 1,
-    borderBottomColor: "#d5d7df",
+    backgroundColor: COLORS.WHITE,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: COLORS.BORDER_LIGHT,
   },
   backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    ...backButtonLightBg,
   },
   logo: {
     width: 120,
     height: 40,
   },
+  /** Fills home-indicator / system nav area so it stays brand blue, not page white */
+  bottomNavHost: {
+    backgroundColor: COLORS.PRIMARY_BLUE,
+  },
   bottomNav: {
     height: 92,
-    backgroundColor: "#005BAD",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "flex-start",
@@ -280,7 +318,7 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 22,
     borderWidth: 1.2,
-    borderColor: "#ffffff",
+    borderColor: COLORS.WHITE,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -288,13 +326,13 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: "#005BAD",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     borderWidth: 2,
   },
   activeIconCircle: {
     backgroundColor: "rgba(255, 255, 255, 0.25)",
   },
   activeIconCircleCenter: {
-    backgroundColor: "#005BAD",
+    backgroundColor: COLORS.PRIMARY_BLUE,
   },
 });

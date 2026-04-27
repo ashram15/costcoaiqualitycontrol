@@ -1,15 +1,12 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/colors';
+import { circleActionRed, HIT_SLOP, ICON } from '../constants/ui';
 
-/** Scan result palette */
-const RED = '#E61031'; /* Medium Candy Apple Red */
-const BUTTON_BLUE = '#005BAD'; /* Medium Persian Blue */
-const LABEL_GREY = '#9E9E9E';
-const INPUT_BG = '#F5F5F5';
-const INPUT_BORDER = '#E8E8E8';
-const RADIUS = 4;
+const INPUT_BORDER = COLORS.INPUT_BORDER;
+const RADIUS = 8;
 
 export default function ScanResultScreen({
   onBack,
@@ -39,7 +36,7 @@ export default function ScanResultScreen({
           </View>
 
           <Image
-            source={require('../assets/costco-logo.png')}
+            source={require('../assets/costcologo.png')}
             style={styles.logoImage}
             resizeMode="contain"
             accessibilityLabel="Costco Wholesale logo"
@@ -60,15 +57,15 @@ export default function ScanResultScreen({
 
           <View style={styles.starsRow}>
             {[0, 1, 2, 3].map((i) => (
-              <MaterialCommunityIcons
+              <Ionicons
                 key={`f-${i}`}
                 name="star"
                 size={28}
-                color={RED}
+                color={COLORS.PRIMARY_RED}
                 style={styles.starIcon}
               />
             ))}
-            <MaterialCommunityIcons name="star-outline" size={28} color={RED} />
+            <Ionicons name="star-outline" size={28} color={COLORS.PRIMARY_RED} />
           </View>
 
           <Text style={styles.notesLabel}>Notes:</Text>
@@ -92,14 +89,16 @@ export default function ScanResultScreen({
         <Pressable
           style={({ pressed }) => [styles.circleBtn, pressed && styles.circleBtnPressed]}
           onPress={onBack || (() => {})}
+          hitSlop={HIT_SLOP}
         >
-          <MaterialCommunityIcons name="chevron-left" size={32} color="#fff" />
+          <Ionicons name="arrow-back" size={ICON.back} color={COLORS.WHITE} />
         </Pressable>
         <Pressable
           style={({ pressed }) => [styles.circleBtn, pressed && styles.circleBtnPressed]}
           onPress={onGoToCart || (() => {})}
+          hitSlop={HIT_SLOP}
         >
-          <MaterialCommunityIcons name="cart-outline" size={28} color="#fff" />
+          <Ionicons name="cart-outline" size={ICON.nav} color={COLORS.WHITE} />
         </Pressable>
       </View>
     </View>
@@ -109,7 +108,7 @@ export default function ScanResultScreen({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.WHITE,
   },
   scroll: {
     flex: 1,
@@ -131,7 +130,7 @@ const styles = StyleSheet.create({
   },
   timestamp: {
     fontSize: 12,
-    color: LABEL_GREY,
+    color: COLORS.LABEL_GREY,
     textAlign: 'left',
   },
   logoImage: {
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
   imagePlaceholder: {
     width: '100%',
     aspectRatio: 1.15,
-    backgroundColor: INPUT_BG,
+    backgroundColor: COLORS.INPUT_BG,
     borderWidth: 1,
     borderColor: INPUT_BORDER,
     borderRadius: RADIUS,
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
   },
   productLine: {
     fontSize: 16,
-    color: LABEL_GREY,
+    color: COLORS.LABEL_GREY,
     marginBottom: 12,
     textAlign: 'center',
     paddingHorizontal: 4,
@@ -172,14 +171,14 @@ const styles = StyleSheet.create({
   },
   notesLabel: {
     fontSize: 15,
-    color: LABEL_GREY,
+    color: COLORS.LABEL_GREY,
     alignSelf: 'flex-start',
     width: '100%',
     marginBottom: 8,
   },
   notesBox: {
     width: '100%',
-    backgroundColor: INPUT_BG,
+    backgroundColor: COLORS.INPUT_BG,
     borderWidth: 1,
     borderColor: INPUT_BORDER,
     borderRadius: RADIUS,
@@ -190,14 +189,14 @@ const styles = StyleSheet.create({
   notesText: {
     fontSize: 14,
     lineHeight: 20,
-    color: '#424242',
+    color: COLORS.TEXT_SECONDARY,
   },
   analysisLinkWrap: {
     paddingVertical: 8,
   },
   analysisLink: {
     fontSize: 15,
-    color: BUTTON_BLUE,
+    color: COLORS.PRIMARY_BLUE,
     textDecorationLine: 'underline',
     textAlign: 'center',
     fontWeight: '600',
@@ -212,12 +211,7 @@ const styles = StyleSheet.create({
     borderTopColor: INPUT_BORDER,
   },
   circleBtn: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: RED,
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...circleActionRed,
   },
   circleBtnPressed: {
     opacity: 0.88,

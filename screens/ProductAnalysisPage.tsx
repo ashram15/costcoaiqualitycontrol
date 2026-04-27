@@ -10,26 +10,36 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../constants/colors";
+import { HIT_SLOP, ICON, RADIUS, headerBarLight } from "../constants/ui";
 
 type Props = {
   onBack?: () => void;
+  onGoToCart?: () => void;
+  onFindAlternatives?: () => void;
 };
 
-export default function ProductAnalysisPage({ onBack }: Props) {
+export default function ProductAnalysisPage({ onBack, onGoToCart, onFindAlternatives }: Props) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.header}>
             {onBack ? (
-              <TouchableOpacity onPress={onBack} activeOpacity={0.7} hitSlop={12}>
-                <Ionicons name="arrow-back" size={28} color="white" />
+              <TouchableOpacity onPress={onBack} activeOpacity={0.7} hitSlop={HIT_SLOP}>
+                <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
               </TouchableOpacity>
             ) : (
-              <Ionicons name="arrow-back" size={28} color="white" />
+              <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
             )}
-            <Image source={require("../assets/costco-logo.png")} style={styles.logo} />
-            <Ionicons name="cart-outline" size={30} color="white" />
+            <Image source={require("../assets/costcologo.png")} style={styles.logo} />
+            {onGoToCart ? (
+              <TouchableOpacity onPress={onGoToCart} activeOpacity={0.7} hitSlop={HIT_SLOP}>
+                <Ionicons name="cart-outline" size={ICON.cart} color={COLORS.PRIMARY_BLUE} />
+              </TouchableOpacity>
+            ) : (
+              <Ionicons name="cart-outline" size={ICON.cart} color={COLORS.PRIMARY_BLUE} />
+            )}
           </View>
 
           <View style={styles.productSection}>
@@ -41,11 +51,11 @@ export default function ProductAnalysisPage({ onBack }: Props) {
               <Text style={styles.productInfo}>Price: $5.50</Text>
 
               <View style={styles.ratingRow}>
-                <Ionicons name="star" size={18} color="#E61031" />
-                <Ionicons name="star" size={18} color="#E61031" />
-                <Ionicons name="star" size={18} color="#E61031" />
-                <Ionicons name="star" size={18} color="#E61031" />
-                <Ionicons name="star-outline" size={18} color="#E61031" />
+                <Ionicons name="star" size={18} color={COLORS.PRIMARY_RED} />
+                <Ionicons name="star" size={18} color={COLORS.PRIMARY_RED} />
+                <Ionicons name="star" size={18} color={COLORS.PRIMARY_RED} />
+                <Ionicons name="star" size={18} color={COLORS.PRIMARY_RED} />
+                <Ionicons name="star-outline" size={18} color={COLORS.PRIMARY_RED} />
                 <Text style={styles.reviewText}>1,240 Reviews</Text>
               </View>
 
@@ -79,11 +89,11 @@ export default function ProductAnalysisPage({ onBack }: Props) {
               </View>
 
               <View style={styles.buttons}>
-                <Pressable style={styles.btn}>
+                <Pressable style={styles.btn} onPress={() => onGoToCart?.()}>
                   <Text style={styles.btnText}>Add To Cart</Text>
                 </Pressable>
 
-                <Pressable style={styles.btn2}>
+                <Pressable style={styles.btn2} onPress={() => onFindAlternatives?.()}>
                   <Text style={styles.btn2Text}>Find Alternatives</Text>
                 </Pressable>
               </View>
@@ -98,27 +108,22 @@ export default function ProductAnalysisPage({ onBack }: Props) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f3f3f3",
+    backgroundColor: COLORS.PAGE_BG_ALT,
   },
   scrollContainer: {
     flexGrow: 1,
   },
   container: {
     flex: 1,
-    backgroundColor: "#f3f3f3",
+    backgroundColor: COLORS.PAGE_BG_ALT,
   },
   header: {
-    backgroundColor: "#005BAD",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    ...headerBarLight,
     paddingHorizontal: 20,
-    paddingTop: 18,
-    paddingBottom: 18,
   },
   logo: {
-    width: 120,
-    height: 40,
+    width: 140,
+    height: 44,
     resizeMode: "contain",
   },
   productSection: {
@@ -158,12 +163,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 16,
     padding: 20,
-    borderRadius: 24,
-    backgroundColor: "#efefef",
+    borderRadius: RADIUS.card,
+    backgroundColor: COLORS.CARD,
     justifyContent: "space-between",
   },
   success: {
-    color: "green",
+    color: COLORS.STATUS_OK,
     marginBottom: 12,
     fontSize: 16,
     fontWeight: "600",
@@ -186,15 +191,15 @@ const styles = StyleSheet.create({
   },
   bar: {
     height: 12,
-    backgroundColor: "#d9d9d9",
+    backgroundColor: COLORS.TRACK_GREY,
     marginVertical: 10,
-    borderRadius: 8,
+    borderRadius: RADIUS.sm,
     overflow: "hidden",
   },
   fill: {
     width: "96%",
     height: "100%",
-    backgroundColor: "#E61031",
+    backgroundColor: COLORS.PRIMARY_RED,
   },
   buttons: {
     flexDirection: "row",
@@ -202,27 +207,30 @@ const styles = StyleSheet.create({
     marginTop: 18,
   },
   btn: {
-    backgroundColor: "#E61031",
+    backgroundColor: COLORS.PRIMARY_RED,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: RADIUS.md,
     minWidth: 140,
     alignItems: "center",
   },
   btn2: {
-    backgroundColor: "#f2b6c1",
+    backgroundColor: COLORS.TINT_RED_BG,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: RADIUS.md,
     minWidth: 170,
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: "rgba(230, 16, 49, 0.22)",
   },
   btnText: {
-    color: "white",
+    color: COLORS.WHITE,
     fontWeight: "bold",
     fontSize: 16,
   },
   btn2Text: {
+    color: COLORS.PRIMARY_RED,
     fontWeight: "bold",
     fontSize: 16,
   },

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import { COLORS } from "../constants/colors";
+import { RADIUS } from "../constants/ui";
 
 const GRID_LINES = Array.from({ length: 12 }, (_, index) => index);
 
@@ -94,7 +96,7 @@ export default function ScannerPage({ onScanAccepted }: { onScanAccepted: () => 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
   },
   camera: {
     ...StyleSheet.absoluteFillObject,
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
   scannerArea: {
     flex: 1,
     overflow: "hidden",
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
     position: "relative",
   },
   scannerAreaTransparent: {
@@ -112,10 +114,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#000000",
+    backgroundColor: COLORS.BLACK,
   },
   loadingText: {
-    color: "#ffffff",
+    color: COLORS.WHITE,
     fontSize: 16,
     fontWeight: "600",
   },
@@ -124,19 +126,19 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 2,
-    backgroundColor: "#c90f1f",
+    backgroundColor: COLORS.PRIMARY_RED,
   },
   gridVertical: {
     position: "absolute",
     top: 0,
     bottom: 0,
     width: 2,
-    backgroundColor: "#c90f1f",
+    backgroundColor: COLORS.PRIMARY_RED,
   },
   modalOverlay: {
     marginTop: "14%",
     marginHorizontal: 20,
-    backgroundColor: "#005BAD",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     borderRadius: 18,
     paddingVertical: 22,
     paddingHorizontal: 18,
@@ -144,13 +146,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 24,
-    color: "#ffffff",
+    color: COLORS.WHITE,
     fontWeight: "700",
     textAlign: "center",
     marginBottom: 12,
   },
   modalDescription: {
-    color: "#e6ecff",
+    color: "rgba(255, 255, 255, 0.88)",
     fontSize: 14,
     lineHeight: 20,
     textAlign: "center",
@@ -163,14 +165,14 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     flex: 1,
-    backgroundColor: "#ffffff",
-    borderRadius: 24,
+    backgroundColor: COLORS.WHITE,
+    borderRadius: RADIUS.card,
     paddingVertical: 11,
     marginHorizontal: 6,
     alignItems: "center",
   },
   modalButtonText: {
-    color: "#005BAD",
+    color: COLORS.PRIMARY_BLUE,
     fontSize: 16,
     fontWeight: "700",
   },

@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/colors';
+import { RADIUS, buttonPrimaryBlue, textOnPrimary } from '../constants/ui';
 
 interface InstructionsPageProps {
   onConfirm: () => void;
@@ -14,7 +16,7 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({ onConfirm }) => {
       <View style={styles.stepContainer}>
         {/* Step 1 */}
         <View style={styles.stepRow}>
-          <Ionicons name="camera-outline" size={32} color="#E31837" />
+          <Ionicons name="camera-outline" size={32} color={COLORS.PRIMARY_RED} />
           <View style={styles.textColumn}>
             <Text style={styles.stepText}>
               Step 1: Focus your camera on the product you want to check.
@@ -24,7 +26,7 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({ onConfirm }) => {
 
         {/* Step 2 */}
         <View style={styles.stepRow}>
-          <Ionicons name="time-outline" size={32} color="#E31837" />
+          <Ionicons name="time-outline" size={32} color={COLORS.PRIMARY_RED} />
           <View style={styles.textColumn}>
             <Text style={styles.stepText}>
               Step 2: Wait for the product to be processed.
@@ -34,7 +36,7 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({ onConfirm }) => {
 
         {/* Step 3 */}
         <View style={styles.stepRow}>
-          <Ionicons name="checkmark-circle-outline" size={32} color="#E31837" />
+          <Ionicons name="checkmark-circle-outline" size={32} color={COLORS.PRIMARY_RED} />
           <View style={styles.textColumn}>
             <Text style={styles.stepText}>
               Step 3: Check your result!
@@ -61,7 +63,7 @@ const InstructionsPage: React.FC<InstructionsPageProps> = ({ onConfirm }) => {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: '#ffffff', 
+    backgroundColor: COLORS.WHITE, 
     padding: 24, 
     alignItems: 'center', 
     justifyContent: 'center' 
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
   title: { 
     fontSize: 32, 
     fontWeight: 'bold', 
-    color: '#E31837', // Costco Red
+    color: COLORS.PRIMARY_RED,
     marginBottom: 40 
   },
   stepContainer: { 
@@ -88,29 +90,28 @@ const styles = StyleSheet.create({
   },
   stepText: { 
     fontSize: 16, 
-    color: '#111827', 
+    color: COLORS.TEXT_PRIMARY, 
     fontWeight: '500', 
     lineHeight: 22 
   },
   note: { 
     fontSize: 14, 
-    color: '#6b7280', 
+    color: COLORS.TEXT_MUTED, 
     textAlign: 'center', 
     fontStyle: 'italic', 
     marginBottom: 50, 
     paddingHorizontal: 20 
   },
   button: { 
-    backgroundColor: '#0047ab', // Costco Blue
+    ...buttonPrimaryBlue,
     paddingVertical: 16, 
     paddingHorizontal: 60, 
-    borderRadius: 12, // Consistent with teammate's button style
-    elevation: 2
+    borderRadius: RADIUS.md, 
+    elevation: 2,
   },
   buttonText: { 
-    color: '#ffffff', 
+    ...textOnPrimary, 
     fontSize: 18, 
-    fontWeight: 'bold' 
   },
 });
 

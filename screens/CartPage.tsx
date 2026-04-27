@@ -10,6 +10,8 @@ import {
   Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../constants/colors";
+import { ICON, RADIUS } from "../constants/ui";
 
 type CartItem = {
   id: number;
@@ -77,11 +79,11 @@ export default function CartPage() {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Ionicons name="cart" size={28} color="white" />
+          <Ionicons name="cart" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
 
-          <Image source={require("../assets/costco-logo.png")} style={styles.logo} />
+          <Image source={require("../assets/costcologo.png")} style={styles.logo} />
 
-          <Ionicons name="search-outline" size={30} color="white" />
+          <Ionicons name="search-outline" size={ICON.cart} color={COLORS.PRIMARY_BLUE} />
         </View>
 
         <View style={styles.itemsSection}>
@@ -183,24 +185,26 @@ export default function CartPage() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f3f3f3",
+    backgroundColor: COLORS.PAGE_BG_ALT,
   },
   container: {
     flex: 1,
-    backgroundColor: "#f3f3f3",
+    backgroundColor: COLORS.PAGE_BG_ALT,
   },
   header: {
-    backgroundColor: "#005BAD",
+    backgroundColor: COLORS.WHITE,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 18,
     paddingTop: 18,
     paddingBottom: 18,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: COLORS.BORDER_LIGHT,
   },
   logo: {
-    width: 120,
-    height: 40,
+    width: 140,
+    height: 44,
     resizeMode: "contain",
   },
   itemsSection: {
@@ -246,14 +250,14 @@ const styles = StyleSheet.create({
   qtyBtn: {
     width: 42,
     height: 42,
-    backgroundColor: "#cfcfcf",
+    backgroundColor: COLORS.QTY_TRACK,
     justifyContent: "center",
     alignItems: "center",
   },
   qtyCenter: {
     width: 42,
     height: 42,
-    backgroundColor: "#e4e4e4",
+    backgroundColor: COLORS.QTY_TRACK_MID,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -269,23 +273,23 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   linkText: {
-    color: "#E61031",
+    color: COLORS.PRIMARY_RED,
     textDecorationLine: "underline",
     fontSize: 15,
     marginBottom: 6,
   },
   divider: {
-    height: 2,
-    backgroundColor: "black",
+    height: 1,
+    backgroundColor: COLORS.BORDER_LIGHT,
     marginHorizontal: 20,
     marginTop: 20,
   },
   bottomSection: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: COLORS.PAGE_BG_ALT,
     paddingBottom: 20,
   },
   summaryBox: {
-    backgroundColor: "#e8e8e8",
+    backgroundColor: COLORS.CARD,
     marginHorizontal: 20,
     marginTop: 16,
     padding: 18,
@@ -315,17 +319,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   checkoutBtn: {
-    backgroundColor: "#E61031",
+    backgroundColor: COLORS.PRIMARY_RED,
     marginHorizontal: 50,
     marginTop: 20,
     paddingVertical: 16,
-    borderRadius: 10,
+    borderRadius: RADIUS.md,
     alignItems: "center",
   },
   checkoutText: {
-    color: "white",
+    color: COLORS.WHITE,
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: "700",
   },
   emptyCartBox: {
     marginTop: 80,

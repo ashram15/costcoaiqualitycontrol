@@ -1,6 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { flaggedProducts } from "../data";
+import { COLORS } from "../constants/colors";
+import { RADIUS } from "../constants/ui";
 
 export default function ProfilePage({
   onShowHistory,
@@ -16,7 +18,7 @@ export default function ProfilePage({
       <View style={styles.profileContent}>
         <View style={styles.profileHeaderRow}>
           <View style={styles.profileIconBox}>
-            <Ionicons name="person-outline" size={58} color="#ffffff" />
+            <Ionicons name="person-outline" size={58} color={COLORS.WHITE} />
           </View>
           <View style={styles.profileDetails}>
             <Text style={styles.profileNameText}>Jane Doe</Text>
@@ -88,13 +90,13 @@ export default function ProfilePage({
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
   },
   profileContent: {
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: 18,
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
   },
   profileHeaderRow: {
     flexDirection: "row",
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     width: 134,
     height: 134,
     borderRadius: 28,
-    backgroundColor: "#f08f84",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -114,13 +116,13 @@ const styles = StyleSheet.create({
     paddingTop: 4,
   },
   profileDetailText: {
-    color: "#111827",
+    color: COLORS.TEXT_PRIMARY,
     fontSize: 14,
     marginBottom: 7,
     lineHeight: 18,
   },
   profileNameText: {
-    color: "#111827",
+    color: COLORS.TEXT_PRIMARY,
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 7,
@@ -128,62 +130,62 @@ const styles = StyleSheet.create({
   },
   scanHistoryButton: {
     width: "100%",
-    backgroundColor: "#005BAD",
-    borderRadius: 12,
+    backgroundColor: COLORS.PRIMARY_BLUE,
+    borderRadius: RADIUS.md,
     paddingVertical: 14,
     alignItems: "center",
     marginTop: 20,
     marginBottom: 12,
   },
   scanHistoryText: {
-    color: "#ffffff",
+    color: COLORS.WHITE,
     fontSize: 16,
     fontWeight: "700",
   },
   adminButton: {
     width: "100%",
-    backgroundColor: "#ffffff",
-    borderRadius: 12,
+    backgroundColor: COLORS.WHITE,
+    borderRadius: RADIUS.md,
     borderWidth: 2,
-    borderColor: "#E61031",
+    borderColor: COLORS.PRIMARY_RED,
     paddingVertical: 12,
     alignItems: "center",
     marginBottom: 12,
   },
   adminButtonText: {
-    color: "#E61031",
+    color: COLORS.PRIMARY_RED,
     fontSize: 15,
     fontWeight: "700",
   },
   scanDashboardButton: {
     width: "100%",
-    backgroundColor: "#ffffff",
-    borderRadius: 12,
+    backgroundColor: COLORS.WHITE,
+    borderRadius: RADIUS.md,
     borderWidth: 2,
-    borderColor: "#005BAD",
+    borderColor: COLORS.PRIMARY_BLUE,
     paddingVertical: 12,
     alignItems: "center",
     marginBottom: 22,
   },
   scanDashboardButtonText: {
-    color: "#005BAD",
+    color: COLORS.PRIMARY_BLUE,
     fontSize: 15,
     fontWeight: "700",
   },
   flaggedSection: {
     borderWidth: 1,
-    borderColor: "#dbe0f0",
+    borderColor: COLORS.BORDER_CARD,
     borderRadius: 14,
     overflow: "hidden",
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.WHITE,
   },
   flaggedHeader: {
-    backgroundColor: "#005BAD",
+    backgroundColor: COLORS.PRIMARY_BLUE,
     paddingVertical: 10,
     paddingHorizontal: 12,
   },
   flaggedHeaderText: {
-    color: "#ffffff",
+    color: COLORS.WHITE,
     fontSize: 16,
     fontWeight: "700",
   },
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 16,
-    backgroundColor: "#f3f4f6",
+    backgroundColor: COLORS.INPUT_BG,
     overflow: "hidden",
     marginBottom: 6,
   },
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   productName: {
-    color: "#111827",
+    color: COLORS.TEXT_PRIMARY,
     fontWeight: "600",
     fontSize: 12,
     textAlign: "center",
@@ -224,13 +226,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   productActionLink: {
-    color: "#005BAD",
+    color: COLORS.PRIMARY_BLUE,
     textDecorationLine: "underline",
     fontSize: 12,
     fontWeight: "600",
   },
   productActionDivider: {
-    color: "#6b7280",
+    color: COLORS.TEXT_MUTED,
     marginHorizontal: 3,
     fontSize: 12,
   },

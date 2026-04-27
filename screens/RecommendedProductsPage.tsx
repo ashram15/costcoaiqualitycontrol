@@ -1,5 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
+import { COLORS } from "../constants/colors";
+import { HIT_SLOP, ICON, RADIUS, headerBarLight } from "../constants/ui";
 import {
   Image,
   Pressable,
@@ -7,6 +9,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -41,19 +44,39 @@ const recommendedItems = [
   },
 ];
 
-export default function RecommendedProductsPage() {
+type RecommendedProductsPageProps = {
+  onBack?: () => void;
+  onGoToCart?: () => void;
+};
+
+export default function RecommendedProductsPage({
+  onBack,
+  onGoToCart,
+}: RecommendedProductsPageProps) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Ionicons name="arrow-back" size={30} color="white" />
+          {onBack ? (
+            <TouchableOpacity onPress={onBack} activeOpacity={0.7} hitSlop={HIT_SLOP}>
+              <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
+            </TouchableOpacity>
+          ) : (
+            <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
+          )}
 
           <Image
-            source={require("../assets/costco-logo.png")}
+            source={require("../assets/costcologo.png")}
             style={styles.logo}
           />
 
-          <Ionicons name="cart-outline" size={32} color="white" />
+          {onGoToCart ? (
+            <TouchableOpacity onPress={onGoToCart} activeOpacity={0.7} hitSlop={HIT_SLOP}>
+              <Ionicons name="cart-outline" size={ICON.cart} color={COLORS.PRIMARY_BLUE} />
+            </TouchableOpacity>
+          ) : (
+            <Ionicons name="cart-outline" size={ICON.cart} color={COLORS.PRIMARY_BLUE} />
+          )}
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -83,7 +106,7 @@ export default function RecommendedProductsPage() {
                     />
                   </View>
 
-                  <Pressable style={styles.addBtn}>
+                  <Pressable style={styles.addBtn} onPress={() => onGoToCart?.()}>
                     <Text style={styles.addBtnText}>Add To Cart</Text>
                   </Pressable>
                 </View>
@@ -101,20 +124,14 @@ export default function RecommendedProductsPage() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f3f3f3",
+    backgroundColor: COLORS.PAGE_BG_ALT,
   },
   container: {
     flex: 1,
-    backgroundColor: "#f3f3f3",
+    backgroundColor: COLORS.PAGE_BG_ALT,
   },
   header: {
-    backgroundColor: "#005BAD",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 18,
-    paddingTop: 18,
-    paddingBottom: 18,
+    ...headerBarLight,
   },
   logo: {
     width: 150,
@@ -143,7 +160,7 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#005BAD",
+    color: COLORS.PRIMARY_BLUE,
     marginBottom: 10,
   },
   infoRow: {
@@ -154,7 +171,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 16,
-    color: "black",
+    color: COLORS.TEXT_BODY,
   },
   scoreText: {
     fontSize: 16,
@@ -162,32 +179,32 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 10,
-    backgroundColor: "#d9d9d9",
-    borderRadius: 8,
+    backgroundColor: COLORS.TRACK_GREY,
+    borderRadius: RADIUS.sm,
     overflow: "hidden",
     marginBottom: 14,
     width: "100%",
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#E61031",
-    borderRadius: 8,
+    backgroundColor: COLORS.PRIMARY_RED,
+    borderRadius: RADIUS.sm,
   },
   addBtn: {
-    backgroundColor: "#E61031",
+    backgroundColor: COLORS.PRIMARY_RED,
     paddingVertical: 12,
-    borderRadius: 24,
+    borderRadius: RADIUS.md,
     alignItems: "center",
     width: 170,
   },
   addBtnText: {
-    color: "white",
+    color: COLORS.WHITE,
     fontWeight: "bold",
     fontSize: 16,
   },
   divider: {
-    height: 2,
-    backgroundColor: "#000",
+    height: 1,
+    backgroundColor: COLORS.BORDER_LIGHT,
     marginHorizontal: 20,
   },
 });
