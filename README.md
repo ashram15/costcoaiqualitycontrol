@@ -2,8 +2,11 @@ Costco app
 
 ## Run locally (Expo)
 
-From this folder on branch `SignUpPage`:
-
+install project dependencies:
+```bash
+npm install
+```
+start expo:
 ```bash
 npx expo start
 ```
