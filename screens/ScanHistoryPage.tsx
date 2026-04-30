@@ -16,7 +16,29 @@ export default function ScanHistoryPage() {
     return `${month}/${day}/${year}`;
   };
 
+  const getStatusFromScore = (score: number) => {
+    if (score >= 90) {
+      return "Excellent";
+    }
+    if (score >= 75) {
+      return "Good";
+    }
+    if (score >= 60) {
+      return "Fair";
+    }
+    if (score >= 40) {
+      return "Low";
+    }
+    return "Critical";
+  };
+
   const getStatusStyle = (status: string) => {
+    if (status === "Excellent") {
+      return styles.statusExcellent;
+    }
+    if (status === "Good") {
+      return styles.statusGood;
+    }
     if (status === "Critical") {
       return styles.statusCritical;
     }
@@ -41,36 +63,42 @@ export default function ScanHistoryPage() {
       <ScrollView contentContainerStyle={styles.scanHistoryList}>
         {scanHistory.map((entry) => (
           <View key={entry.id} style={styles.scanHistoryCard}>
-            <View style={styles.scanCardRow}>
-              <View style={styles.scanCardImagePlaceholder}>
-                <Image source={getProductImage(entry.id)} style={styles.scanCardImage} resizeMode="cover" />
-              </View>
-              <View style={styles.scanCardDetails}>
-                <Text style={styles.scanCardText}>
-                  <Text style={styles.scanCardLabel}>Product Name: </Text>
-                  {entry.productName}
-                </Text>
-                <Text style={styles.scanCardText}>
-                  <Text style={styles.scanCardLabel}>Timestamp: </Text>
-                  {entry.timestamp}
-                </Text>
-                <Text style={styles.scanCardText}>
-                  <Text style={styles.scanCardLabel}>Score: </Text>
-                  {entry.score}%[<Text style={getStatusStyle(entry.status)}>{entry.status}</Text>]
-                </Text>
-                <Text style={styles.scanCardText}>
-                  <Text style={styles.scanCardLabel}>Best By date: </Text>
-                  {formatDateToMMDDYYYY(entry.bestByDate)}
-                </Text>
-                <Text style={styles.scanCardText}>
-                  <Text style={styles.scanCardLabel}>Problems: </Text>
-                  {entry.problems}
-                </Text>
-                <TouchableOpacity activeOpacity={0.85}>
-                  <Text style={styles.assessmentLink}>View Full Assessment</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            {/** Status shown in UI must reflect score thresholds. */}
+            {(() => {
+              const status = getStatusFromScore(entry.score);
+              return (
+                <View style={styles.scanCardRow}>
+                  <View style={styles.scanCardImagePlaceholder}>
+                    <Image source={getProductImage(entry.id)} style={styles.scanCardImage} resizeMode="cover" />
+                  </View>
+                  <View style={styles.scanCardDetails}>
+                    <Text style={styles.scanCardText}>
+                      <Text style={styles.scanCardLabel}>Product Name: </Text>
+                      {entry.productName}
+                    </Text>
+                    <Text style={styles.scanCardText}>
+                      <Text style={styles.scanCardLabel}>Timestamp: </Text>
+                      {entry.timestamp}
+                    </Text>
+                    <Text style={styles.scanCardText}>
+                      <Text style={styles.scanCardLabel}>Score: </Text>
+                      {entry.score}%[<Text style={getStatusStyle(status)}>{status}</Text>]
+                    </Text>
+                    <Text style={styles.scanCardText}>
+                      <Text style={styles.scanCardLabel}>Best By date: </Text>
+                      {formatDateToMMDDYYYY(entry.bestByDate)}
+                    </Text>
+                    <Text style={styles.scanCardText}>
+                      <Text style={styles.scanCardLabel}>Problems: </Text>
+                      {entry.problems}
+                    </Text>
+                    <TouchableOpacity activeOpacity={0.85}>
+                      <Text style={styles.assessmentLink}>View Full Assessment</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })()}
           </View>
         ))}
       </ScrollView>
@@ -126,6 +154,14 @@ const styles = StyleSheet.create({
   },
   statusCritical: {
     color: COLORS.PRIMARY_RED,
+    fontWeight: "700",
+  },
+  statusExcellent: {
+    color: "#15803d",
+    fontWeight: "700",
+  },
+  statusGood: {
+    color: "#1d4ed8",
     fontWeight: "700",
   },
   statusFair: {
