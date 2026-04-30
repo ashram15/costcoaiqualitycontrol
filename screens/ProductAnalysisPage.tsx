@@ -13,6 +13,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants/colors";
 import { HIT_SLOP, ICON, RADIUS, headerBarLight } from "../constants/ui";
 
+/** Same asset as `ScanResultScreen` so analysis and cart match the post-scan photo. */
+const SCANNED_PRODUCT_IMAGE = require("../assets/scan-product-butter.png");
+
 type Props = {
   onBack?: () => void;
   onGoToCart?: () => void;
@@ -56,10 +59,10 @@ export default function ProductAnalysisPage({
           </View>
 
           <View style={styles.productSection}>
-            <Image source={require("../assets/butter.png")} style={styles.productImage} />
+            <Image source={SCANNED_PRODUCT_IMAGE} style={styles.productImage} />
 
             <View style={{ flex: 1 }}>
-              <Text style={styles.productName}>Kirkland Butter</Text>
+              <Text style={styles.productName}>Kirkland Sweet Cream Butter</Text>
               <Text style={styles.productInfo}>ID: 894321</Text>
               <Text style={styles.productInfo}>Price: $5.50</Text>
 
@@ -107,9 +110,9 @@ export default function ProductAnalysisPage({
                   onPress={() => {
                     onAddToCart?.({
                       id: "894321",
-                      name: "Kirkland Butter",
+                      name: "Kirkland Sweet Cream Butter",
                       price: 5.5,
-                      image: require("../assets/butter.png"),
+                      image: SCANNED_PRODUCT_IMAGE,
                     });
                     onGoToCart?.();
                   }}
