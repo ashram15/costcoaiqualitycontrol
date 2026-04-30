@@ -19,6 +19,7 @@ const recommendedItems = [
     name: "Kirkland Salted Sweet Butter",
     stock: 52,
     qualityScore: 96,
+    price: 5.5,
     image: require("../assets/butter1.png"),
   },
   {
@@ -26,6 +27,7 @@ const recommendedItems = [
     name: "Organic Butter",
     stock: 34,
     qualityScore: 92,
+    price: 6.99,
     image: require("../assets/butter2.png"),
   },
   {
@@ -33,6 +35,7 @@ const recommendedItems = [
     name: "Cabot Grass-Fed Butter",
     stock: 21,
     qualityScore: 88,
+    price: 7.49,
     image: require("../assets/butter3.png"),
   },
   {
@@ -40,6 +43,7 @@ const recommendedItems = [
     name: "Cabot Creamery Butter",
     stock: 15,
     qualityScore: 83,
+    price: 6.49,
     image: require("../assets/butter4.png"),
   },
 ];
@@ -47,11 +51,18 @@ const recommendedItems = [
 type RecommendedProductsPageProps = {
   onBack?: () => void;
   onGoToCart?: () => void;
+  onAddToCart?: (item: {
+    id: string;
+    name: string;
+    price: number;
+    image: any;
+  }) => void;
 };
 
 export default function RecommendedProductsPage({
   onBack,
   onGoToCart,
+  onAddToCart,
 }: RecommendedProductsPageProps) {
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -65,10 +76,7 @@ export default function RecommendedProductsPage({
             <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
           )}
 
-          <Image
-            source={require("../assets/costcologo.png")}
-            style={styles.logo}
-          />
+          <Image source={require("../assets/costcologo.png")} style={styles.logo} />
 
           {onGoToCart ? (
             <TouchableOpacity onPress={onGoToCart} activeOpacity={0.7} hitSlop={HIT_SLOP}>
@@ -106,7 +114,18 @@ export default function RecommendedProductsPage({
                     />
                   </View>
 
-                  <Pressable style={styles.addBtn} onPress={() => onGoToCart?.()}>
+                  <Pressable
+                    style={styles.addBtn}
+                    onPress={() => {
+                      onAddToCart?.({
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        image: item.image,
+                      });
+                      onGoToCart?.();
+                    }}
+                  >
                     <Text style={styles.addBtnText}>Add To Cart</Text>
                   </Pressable>
                 </View>

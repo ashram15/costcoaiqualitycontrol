@@ -16,10 +16,21 @@ import { HIT_SLOP, ICON, RADIUS, headerBarLight } from "../constants/ui";
 type Props = {
   onBack?: () => void;
   onGoToCart?: () => void;
+  onAddToCart?: (item: {
+    id: string;
+    name: string;
+    price: number;
+    image: any;
+  }) => void;
   onFindAlternatives?: () => void;
 };
 
-export default function ProductAnalysisPage({ onBack, onGoToCart, onFindAlternatives }: Props) {
+export default function ProductAnalysisPage({
+  onBack,
+  onGoToCart,
+  onAddToCart,
+  onFindAlternatives,
+}: Props) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -32,7 +43,9 @@ export default function ProductAnalysisPage({ onBack, onGoToCart, onFindAlternat
             ) : (
               <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
             )}
+
             <Image source={require("../assets/costcologo.png")} style={styles.logo} />
+
             {onGoToCart ? (
               <TouchableOpacity onPress={onGoToCart} activeOpacity={0.7} hitSlop={HIT_SLOP}>
                 <Ionicons name="cart-outline" size={ICON.cart} color={COLORS.PRIMARY_BLUE} />
@@ -89,7 +102,18 @@ export default function ProductAnalysisPage({ onBack, onGoToCart, onFindAlternat
               </View>
 
               <View style={styles.buttons}>
-                <Pressable style={styles.btn} onPress={() => onGoToCart?.()}>
+                <Pressable
+                  style={styles.btn}
+                  onPress={() => {
+                    onAddToCart?.({
+                      id: "894321",
+                      name: "Kirkland Butter",
+                      price: 5.5,
+                      image: require("../assets/butter.png"),
+                    });
+                    onGoToCart?.();
+                  }}
+                >
                   <Text style={styles.btnText}>Add To Cart</Text>
                 </Pressable>
 

@@ -17,6 +17,14 @@ import HomeScreen from "./screens/HomeScreen";
 import InstructionsPage from "./screens/InstructionsPage";
 import SignUpScreen from "./screens/SignUpScreen";
 
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: any;
+};
+
 type AppPage =
   | "instructions"
   | "home"
@@ -46,22 +54,11 @@ function BottomNav({
   onPageChange: (nextPage: AppPage) => void;
 }) {
   const isActive = (key: string) => {
-    if (key === "home") {
-      return page === "home";
-    }
-    if (key === "warehouse") {
-      return page === "instructions";
-    }
-    if (key === "tag") {
-      return page === "cart";
-    }
+    if (key === "home") return page === "home";
+    if (key === "warehouse") return page === "instructions";
+    if (key === "tag") return page === "cart";
     if (key === "scanner") {
-      return (
-        page === "scanner" ||
-        page === "scanResult" ||
-        page === "productAnalysis" ||
-        page === "recommended"
-      );
+      return page === "scanner" || page === "scanResult" || page === "productAnalysis" || page === "recommended";
     }
     if (key === "profile") {
       return page === "profile" || page === "markForRemoval" || page === "scanDashboardAdmin";
@@ -70,21 +67,10 @@ function BottomNav({
   };
 
   const onPressItem = (key: string) => {
-    if (key === "home") {
-      onPageChange("home");
-      return;
-    }
-    if (key === "warehouse") {
-      onPageChange("instructions");
-      return;
-    }
-    if (key === "tag") {
-      onPageChange("cart");
-      return;
-    }
-    if (key === "scanner" || key === "profile") {
-      onPageChange(key);
-    }
+    if (key === "home") return onPageChange("home");
+    if (key === "warehouse") return onPageChange("instructions");
+    if (key === "tag") return onPageChange("cart");
+    if (key === "scanner" || key === "profile") onPageChange(key);
   };
 
   return (
@@ -108,11 +94,7 @@ function BottomNav({
             ]}
           >
             {item.lib === "material-community" ? (
-              <MaterialCommunityIcons
-                name={item.icon}
-                size={item.isCenter ? 36 : 24}
-                color={COLORS.WHITE}
-              />
+              <MaterialCommunityIcons name={item.icon} size={item.isCenter ? 36 : 24} color={COLORS.WHITE} />
             ) : (
               <Ionicons name={item.icon} size={item.isCenter ? 36 : 24} color={COLORS.WHITE} />
             )}
@@ -127,22 +109,14 @@ function TopBanner({ onBackPress }: { onBackPress?: () => void }) {
   return (
     <View style={styles.topBannerRow}>
       {onBackPress ? (
-        <TouchableOpacity
-          style={styles.backButton}
-          activeOpacity={0.7}
-          onPress={onBackPress}
-          hitSlop={HIT_SLOP}
-        >
+        <TouchableOpacity style={styles.backButton} activeOpacity={0.7} onPress={onBackPress} hitSlop={HIT_SLOP}>
           <Ionicons name="arrow-back" size={ICON.back} color={COLORS.PRIMARY_BLUE} />
         </TouchableOpacity>
       ) : (
         <View style={styles.backButton} />
       )}
-      <Image
-        source={require("./assets/costcologo.png")}
-        resizeMode="contain"
-        style={styles.logo}
-      />
+
+      <Image source={require("./assets/costcologo.png")} resizeMode="contain" style={styles.logo} />
     </View>
   );
 }
@@ -151,6 +125,39 @@ export default function App() {
   const insets = useSafeAreaInsets();
   const [inApp, setInApp] = React.useState(false);
   const [appPage, setAppPage] = React.useState<AppPage>("home");
+
+  const [cartItems, setCartItems] = React.useState<CartItem[]>([
+    {
+      id: "milk",
+      name: "A2 Protein Milk",
+      price: 15.99,
+      quantity: 1,
+      image: require("./assets/milk.png"),
+    },
+    {
+      id: "cereal",
+      name: "Granola Cereal",
+      price: 8.99,
+      quantity: 1,
+      image: require("./assets/cereal.png"),
+    },
+  ]);
+
+  const addToCart = (item: Omit<CartItem, "quantity">) => {
+    setCartItems((prev) => {
+      const existing = prev.find((cartItem) => cartItem.id === item.id);
+
+      if (existing) {
+        return prev.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      }
+
+      return [...prev, { ...item, quantity: 1 }];
+    });
+  };
 
   if (!inApp) {
     return (
@@ -163,24 +170,23 @@ export default function App() {
     );
   }
 
-  const handleBackPress =
-    appPage === "scanHistory" ? () => setAppPage("profile") : undefined;
+  const handleBackPress = appPage === "scanHistory" ? () => setAppPage("profile") : undefined;
 
   const renderAppPage = () => {
     if (appPage === "instructions") {
       return <InstructionsPage onConfirm={() => setAppPage("scanner")} />;
     }
+
     if (appPage === "home") {
       return (
         <HomeScreen
           onNavigate={(target) => {
-            if (target === "scanner" || target === "profile") {
-              setAppPage(target);
-            }
+            if (target === "scanner" || target === "profile") setAppPage(target);
           }}
         />
       );
     }
+
     if (appPage === "profile") {
       return (
         <ProfilePage
@@ -190,35 +196,44 @@ export default function App() {
         />
       );
     }
+
     if (appPage === "markForRemoval") {
       return <MarkForRemovalAdminScreen onBack={() => setAppPage("profile")} />;
     }
+
     if (appPage === "scanDashboardAdmin") {
       return <ScanDashboardAdminPage onBack={() => setAppPage("profile")} />;
     }
+
     if (appPage === "scanHistory") {
       return <ScanHistoryPage />;
     }
+
     if (appPage === "productAnalysis") {
       return (
         <ProductAnalysisPage
           onBack={() => setAppPage("scanner")}
           onGoToCart={() => setAppPage("cart")}
+          onAddToCart={addToCart}
           onFindAlternatives={() => setAppPage("recommended")}
         />
       );
     }
+
     if (appPage === "cart") {
-      return <CartPage />;
+      return <CartPage cartItems={cartItems} setCartItems={setCartItems} />;
     }
+
     if (appPage === "recommended") {
       return (
         <RecommendedProductsPage
           onBack={() => setAppPage("productAnalysis")}
           onGoToCart={() => setAppPage("cart")}
+          onAddToCart={addToCart}
         />
       );
     }
+
     if (appPage === "scanResult") {
       return (
         <ScanResultScreen
@@ -228,6 +243,7 @@ export default function App() {
         />
       );
     }
+
     return <ScannerPage onScanAccepted={() => setAppPage("scanResult")} />;
   };
 
@@ -244,12 +260,13 @@ export default function App() {
   return (
     <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} />
+
       <View style={styles.mobileView}>
         {showShellHeader ? <TopBanner onBackPress={handleBackPress} /> : null}
+
         <View style={styles.pageFill}>{renderAppPage()}</View>
-        <View
-          style={[styles.bottomNavHost, { paddingBottom: insets.bottom }]}
-        >
+
+        <View style={[styles.bottomNavHost, { paddingBottom: insets.bottom }]}>
           <BottomNav page={appPage} onPageChange={setAppPage} />
         </View>
       </View>
@@ -291,7 +308,6 @@ const styles = StyleSheet.create({
     width: 120,
     height: 40,
   },
-  /** Fills home-indicator / system nav area so it stays brand blue, not page white */
   bottomNavHost: {
     backgroundColor: COLORS.PRIMARY_BLUE,
   },

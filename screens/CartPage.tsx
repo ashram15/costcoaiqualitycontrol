@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   SafeAreaView,
   View,
@@ -12,33 +12,14 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants/colors";
 import { ICON, RADIUS } from "../constants/ui";
+import type { CartItem } from "../App";
 
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: any;
+type Props = {
+  cartItems: CartItem[];
+  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
 };
 
-export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "A2 Protein Milk",
-      price: 15.99,
-      quantity: 1,
-      image: require("../assets/milk.png"),
-    },
-    {
-      id: 2,
-      name: "Granola Cereal",
-      price: 8.99,
-      quantity: 1,
-      image: require("../assets/cereal.png"),
-    },
-  ]);
-
+export default function CartPage({ cartItems, setCartItems }: Props) {
   const totalItems = useMemo(() => {
     return cartItems.reduce((sum, item) => sum + item.quantity, 0);
   }, [cartItems]);
@@ -51,13 +32,15 @@ export default function CartPage() {
   const deliveryFee = cartItems.length > 0 ? 2.0 : 0;
   const total = subtotal + shipping + deliveryFee;
 
-  const increaseQuantity = (id: number) => {
+  const increaseQuantity = (id: string) => {
     setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
     );
   };
 
-  const decreaseQuantity = (id: number) => {
+  const decreaseQuantity = (id: string) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.id === id
@@ -67,7 +50,7 @@ export default function CartPage() {
     );
   };
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
