@@ -30,7 +30,7 @@ export default function SignUpScreen({ onEnterApp }) {
 
           <Text style={styles.subtitle}>
             Already Registered?{' '}
-            <Text style={styles.link} onPress={() => {}}>
+            <Text style={styles.link} onPress={onEnterApp}>
               Log in here.
             </Text>
           </Text>
