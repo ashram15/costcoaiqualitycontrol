@@ -55,6 +55,9 @@ export default function ScanHistoryPage() {
     if (id === "s2") {
       return require("../assets/costcobutter.png");
     }
+    if (id === "s4") {
+      return require("../assets/butter1.png");
+    }
     return require("../assets/frozenberries.png");
   };
 

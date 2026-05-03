@@ -6,6 +6,15 @@ export const flaggedProducts = [
 
 export const scanHistory = [
   {
+    id: "s4",
+    productName: "Kirkland Salted Sweet Butter",
+    timestamp: "Apr 17, 2026 - 2:41 PM",
+    score: 96,
+    status: "Excellent",
+    bestByDate: "Jun 01, 2026",
+    problems: "No major concerns",
+  },
+  {
     id: "s1",
     productName: "Organic Spinach",
     timestamp: "Apr 14, 2026 - 9:20 AM",
