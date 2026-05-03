@@ -11,10 +11,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants/colors";
+import { SCANNED_BUTTER_CART_ITEM, SCANNED_BUTTER_IMAGE } from "../constants/scannedProduct";
 import { HIT_SLOP, ICON, RADIUS, headerBarLight } from "../constants/ui";
-
-/** Same asset as `ScanResultScreen` so analysis and cart match the post-scan photo. */
-const SCANNED_PRODUCT_IMAGE = require("../assets/scan-product-butter.png");
 
 type Props = {
   onBack?: () => void;
@@ -59,7 +57,7 @@ export default function ProductAnalysisPage({
           </View>
 
           <View style={styles.productSection}>
-            <Image source={SCANNED_PRODUCT_IMAGE} style={styles.productImage} />
+            <Image source={SCANNED_BUTTER_IMAGE} style={styles.productImage} />
 
             <View style={{ flex: 1 }}>
               <Text style={styles.productName}>Kirkland Sweet Cream Butter</Text>
@@ -108,12 +106,7 @@ export default function ProductAnalysisPage({
                 <Pressable
                   style={styles.btn}
                   onPress={() => {
-                    onAddToCart?.({
-                      id: "894321",
-                      name: "Kirkland Sweet Cream Butter",
-                      price: 5.5,
-                      image: SCANNED_PRODUCT_IMAGE,
-                    });
+                    onAddToCart?.(SCANNED_BUTTER_CART_ITEM);
                     onGoToCart?.();
                   }}
                 >

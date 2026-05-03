@@ -16,6 +16,7 @@ import ScannerPage from "./screens/ScannerPage";
 import HomeScreen from "./screens/HomeScreen";
 import InstructionsPage from "./screens/InstructionsPage";
 import SignUpScreen from "./screens/SignUpScreen";
+import { SCANNED_BUTTER_CART_ITEM } from "./constants/scannedProduct";
 
 export type CartItem = {
   id: string;
@@ -239,7 +240,10 @@ export default function App() {
         <ScanResultScreen
           onBack={() => setAppPage("scanner")}
           onViewAnalysis={() => setAppPage("productAnalysis")}
-          onGoToCart={() => setAppPage("cart")}
+          onGoToCart={() => {
+            addToCart(SCANNED_BUTTER_CART_ITEM);
+            setAppPage("cart");
+          }}
         />
       );
     }
